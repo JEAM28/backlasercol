@@ -11,13 +11,17 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDTO } from 'src/dtos/user.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { Roles } from 'src/decorators/roles.decorator';
+import { Role } from 'src/roles.enum';
+import { RolesGuard } from 'src/guards/roles.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   getUsers(@Query('page') page: number, @Query('limit') limit: number) {
     if (page && limit) {
       return this.usersService.getUsers(page, limit);
@@ -26,19 +30,23 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   deleteUser(@Param('id') id: string) {
     return this.usersService.deleteUser(id);
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   getUserById(@Param('id') id: string) {
     return this.usersService.getUserById(id);
   }
 
   @Put(':id')
   @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   updateUser(@Param('id') id: string, @Body() user: CreateUserDTO) {
     return this.usersService.updateUser(id, user);
   }

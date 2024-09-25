@@ -12,6 +12,9 @@ import {
 import { ProductsService } from './products.service';
 import { Products } from './products.entity';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+import { Roles } from 'src/decorators/roles.decorator';
+import { Role } from 'src/roles.enum';
 
 @Controller('products')
 export class ProductsController {
@@ -43,19 +46,22 @@ export class ProductsController {
   }
 
   @Post()
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   addProduct(@Body() product: Partial<Products>) {
     return this.productsService.addProduct(product);
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   editProduct(@Param('id') id: string, @Body() product: Partial<Products>) {
     return this.productsService.editProduct(id, product);
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   deleteProduct(@Param('id') id: string) {
     return this.productsService.deleteProduct(id);
   }
