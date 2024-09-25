@@ -1,16 +1,14 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  Query,
+  Get,
+  Param,
   Put,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UsersI } from './users.interface';
+import { CreateUserDto } from './users.dto';
 
 @Controller('users')
 export class UsersController {
@@ -21,12 +19,12 @@ export class UsersController {
     if (page && limit) {
       return this.usersService.getUsers(page, limit);
     }
-    return this.usersService.getUsers(1, 30);
+    return this.usersService.getUsers(1, 5);
   }
 
-  @Get(':name')
-  getUserByName(@Param('name') name: string) {
-    return this.usersService.getUserByName(name);
+  @Delete(':id')
+  deleteUser(@Param('id') id: string) {
+    return this.usersService.deleteUser(id);
   }
 
   @Get(':id')
@@ -34,20 +32,8 @@ export class UsersController {
     return this.usersService.getUserById(id);
   }
 
-  @Post()
-  createUser(@Body() user: UsersI) {
-    const id = this.usersService.createUser(user);
-    return user;
-  }
-
   @Put(':id')
-  updatUser(@Param('id') id: string, @Body() user: UsersI) {
-    this.usersService.updateUser(id, user);
-    return user;
-  }
-
-  @Delete(':id')
-  deleteUserById(@Param('id') id: string) {
-    return this.usersService.deleteUserById(id);
+  updateUser(@Param('id') id: string, @Body() user: CreateUserDto) {
+    return this.usersService.updateUser(id, user);
   }
 }

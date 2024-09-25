@@ -1,32 +1,53 @@
-import { Injectable } from '@nestjs/common';
-import { UsersRpository } from './users.repository';
-import { UsersI } from './users.interface';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Users } from './users.entity';
+import { Repository } from 'typeorm';
+import { CreateUserDto } from './users.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRpository) {}
+  constructor(
+    @InjectRepository(Users) private userRepository: Repository<Users>,
+  ) {}
 
-  getUsers(page: number, limit: number) {
-    return this.usersRepository.getUsers(page, limit);
+  async getUsers(page: number, limit: number) {
+    let user = await this.userRepository.find();
+    const start = (page - 1) * limit;
+    const end = start + +limit;
+    user = user.slice(start, end);
+    return user;
   }
 
-  getUserById(id: string) {
-    return this.usersRepository.getUserById(id);
+  async getUserById(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: {
+        orders: true,
+      },
+    });
+    if (!user) {
+      throw new NotFoundException('usuario no fue encontrado');
+    }
+    return user;
   }
 
-  createUser(user: UsersI) {
-    return this.usersRepository.createUser(user);
+  async createUser(user: Partial<Users>) {
+    const newUser = await this.userRepository.save(user);
+    return newUser;
   }
 
-  updateUser(id: string, user: UsersI) {
-    return this.usersRepository.updateUser(id, user);
+  async updateUser(id: string, user: CreateUserDto) {
+    const updateUser = await this.userRepository.findOneBy({ id });
+    return updateUser;
   }
 
-  deleteUserById(id: string) {
-    return this.usersRepository.deleteUserById(id);
+  async deleteUser(id: string) {
+    const user = await this.userRepository.findOneBy({ id });
+    this.userRepository.remove(user);
+    return `usuario con id: ${id} se elimino correctamente`;
   }
 
-  getUserByName(name: string) {
-    return this.usersRepository.getUserByName(name);
+  async getUserByEmail(email: string) {
+    return await this.userRepository.findOneBy({ email });
   }
 }
