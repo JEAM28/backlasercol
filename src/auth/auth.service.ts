@@ -14,9 +14,9 @@ export class AuthService {
   async register(user: Partial<Users>) {
     const { email, password } = user;
 
-    const userFound = await this.usersService.getUserByEmail(email);
+    const usuarioNoFound = await this.usersService.getUserByEmail(email);
 
-    if (userFound) {
+    if (usuarioNoFound) {
       throw new BadRequestException('el usuario ya esta registrado');
     }
 
@@ -32,7 +32,7 @@ export class AuthService {
     });
   }
 
-  async login(email: string, password: string) {
+  async signIn(email: string, password: string) {
     const userFound = await this.usersService.getUserByEmail(email);
 
     if (!userFound) {
