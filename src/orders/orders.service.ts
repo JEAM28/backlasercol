@@ -54,13 +54,12 @@ export class OrdersService {
       }),
     );
 
-    const orderDetail = new OrderDetails();
+    const detalleOrder = new OrderDetails();
 
-    orderDetail.price = Number(Number(total).toFixed(2));
-    orderDetail.products = productsArray;
-    orderDetail.order = newOrder;
-    console.log(orderDetail);
-    await this.orderDetailsRepository.save(orderDetail);
+    detalleOrder.price = Number(Number(total).toFixed(2));
+    detalleOrder.products = productsArray;
+    detalleOrder.order = newOrder;
+    await this.orderDetailsRepository.save(detalleOrder);
 
     return await this.ordersRepository.find({
       where: { id: newOrder.id },
