@@ -59,7 +59,7 @@ export class OrdersService {
     orderDetail.price = Number(Number(total).toFixed(2));
     orderDetail.products = productsArray;
     orderDetail.order = newOrder;
-
+    console.log(orderDetail);
     await this.orderDetailsRepository.save(orderDetail);
 
     return await this.ordersRepository.find({
