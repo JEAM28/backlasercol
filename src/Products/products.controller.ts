@@ -28,13 +28,13 @@ export class ProductsController {
     return this.productsService.getProducts(1, 15);
   }
 
-  @Get(':nombre')
+  @Get('name/:nombre')
   @UseGuards(AuthGuard)
   getProductByName(@Param('nombre') nombre: string) {
     return this.productsService.getProductByName(nombre);
   }
 
-  @Get(':category')
+  @Get('category/:category')
   @UseGuards(AuthGuard)
   getProductByCategory(@Param('category') category: string) {
     return this.productsService.getProductByCategory(category);
