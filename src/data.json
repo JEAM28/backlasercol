@@ -107,7 +107,7 @@
     "stock": 8,
     "valor": 25000.0,
     "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106758/WhatsApp_Image_2024-09-23_at_10.48.43_AM_s0m0dm.jpg",
-    "category": "placasmascotas"
+    "category": "placas mascotas"
   },
   {
     "nombre": "Placa hueso grande",
@@ -117,7 +117,7 @@
     "stock": 10,
     "valor": 25000.0,
     "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106758/WhatsApp_Image_2024-09-23_at_10.48.42_AM_1_xyyp5j.jpg",
-    "category": "placasmascotas"
+    "category": "placas mascotas"
   },
   {
     "nombre": "Placa hueso pequeño",
@@ -127,7 +127,7 @@
     "stock": 6,
     "valor": 22000.0,
     "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.42_AM_nqze2h.jpg",
-    "category": "placasmascotas"
+    "category": "placas mascotas"
   },
   {
     "nombre": "Manilla de identificacion",
@@ -137,7 +137,7 @@
     "stock": 10,
     "valor": 40000.0,
     "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106758/WhatsApp_Image_2024-09-23_at_10.48.50_AM_annprb.jpg",
-    "category": "manillasID"
+    "category": "manillas ID"
   },
   {
     "nombre": "Manilla de identificacion",
@@ -147,7 +147,7 @@
     "stock": 10,
     "valor": 40000.0,
     "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106758/WhatsApp_Image_2024-09-23_at_10.48.49_AM_ujni4x.jpg",
-    "category": "manillasID"
+    "category": "manillas ID"
   },
   {
     "nombre": "Manilla de identificacion",
@@ -157,6 +157,6 @@
     "stock": 10,
     "valor": 40000.0,
     "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.49_AM_1_ioz1hl.jpg",
-    "category": "manillasID"
+    "category": "manillas ID"
   }
 ]
