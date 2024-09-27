@@ -17,7 +17,7 @@ export class CreateUserDTO {
   @IsNotEmpty()
   @IsString()
   @MinLength(3)
-  @Matches(/^[a-zA-Z]+$/)
+  @Matches(/^[A-Za-z]+( [A-Za-z]+)*$/)
   name: string;
 
   @IsNotEmpty()
