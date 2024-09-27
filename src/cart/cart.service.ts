@@ -31,18 +31,21 @@ export class CartService {
   ) {}
 
   async createCart(userId?: string): Promise<Cart> {
-    const newCart = this.cartRepository.create();
-    if (userId) {
-      const user = await this.userRepository.findOne({
-        where: { id: userId },
-      });
-      if (!user) {
-        throw new NotFoundException('usuario no encontrado');
-      }
-      newCart.users = user;
+    if (!userId) {
+        throw new BadRequestException('userId is required');
     }
+
+    const newCart = this.cartRepository.create();
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+
+    if (!user) {
+        throw new NotFoundException('Usuario no encontrado');
+    }
+
+    newCart.users = user;
     return await this.cartRepository.save(newCart);
-  }
+}
+
 
   async addProductCart(
     cartId: string,

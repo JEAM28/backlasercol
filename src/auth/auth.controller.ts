@@ -15,6 +15,6 @@ export class AuthController {
   @Post('/login')
   login(@Body() credentials: LoginUserDTO) {
     const { email, password } = credentials;
-    return this.authService.signIn(email, password);
+    return this.authService.login(email, password);//Cambiar signIn por login
   }
 }
