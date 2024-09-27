@@ -11,8 +11,10 @@ import {
 } from '@nestjs/common';
 import { FileUploadService } from './fileUpload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('file')
+@UseGuards(AuthGuard)
 export class FileUploadController {
   constructor(private readonly fileUploadService: FileUploadService) {}
 
