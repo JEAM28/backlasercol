@@ -1,9 +1,9 @@
+import { Cart } from '../cart/cart.entity';
 import { Categories } from 'src/categories/categories.entity';
 import { OrderDetails } from 'src/orders/orderdetails.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -62,12 +62,12 @@ export class Products {
   })
   imgUrl: string;
 
+  @ManyToOne(() => Cart, (cart) => cart.products)
+  cart: Cart;
+
   @ManyToMany(() => OrderDetails, (orderDetails) => orderDetails.products)
   orderDetail: OrderDetails[];
 
   @ManyToOne(() => Categories, (category) => category.products)
-  @JoinColumn({
-    name: 'category',
-  })
   category: Categories;
 }

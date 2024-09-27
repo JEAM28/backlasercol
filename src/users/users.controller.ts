@@ -8,7 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDTO } from 'src/dtos/user.dto';
+import { CreateUserDTO } from 'src/users/users.dto';
 
 @Controller('users')
 export class UsersController {

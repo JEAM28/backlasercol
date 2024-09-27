@@ -1,11 +1,11 @@
 import { PickType } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsDateString,
   IsEmail,
   IsNotEmpty,
   IsNumber,
   IsString,
-  IsStrongPassword,
   Matches,
   MaxLength,
   MinLength,
@@ -19,6 +19,11 @@ export class CreateUserDTO {
   @MinLength(3)
   @Matches(/^[a-zA-Z]+$/)
   name: string;
+
+  @IsNotEmpty()
+  @MinLength(6)
+  @Matches(/^[0-9]+$/, { message: 'El DNI solo puede contener números' })
+  Dni: string;
 
   @IsNotEmpty()
   @IsEmail()
@@ -65,8 +70,8 @@ export class CreateUserDTO {
 
   @IsNotEmpty()
   @IsDateString()
-  @Matches(/^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/, {
-    message: 'La fecha debe estar en formato YYYY-MM-DD',
+  @Transform(({ value }) => new Date(value).toISOString(), {
+    toClassOnly: true,
   })
   birthDate: Date;
 }

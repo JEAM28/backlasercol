@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { OrdersService } from './orders.service';
+import { Cart } from 'src/cart/cart.entity';
+import { Orders } from './orders.entity';
 
 @Controller('orders')
 export class OrdersController {

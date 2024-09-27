@@ -7,9 +7,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from './config/typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
-import { FileUploadModule } from './file-upload/fileUpload.module';
+import { FileUploadModule } from './fileUpload/fileUpload.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { CartModule } from './cart/cart.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -27,8 +29,10 @@ import { JwtModule } from '@nestjs/jwt';
       signOptions: { expiresIn: '1h' },
     }),
     UsersModule,
-    CategoriesModule,
+    OrdersModule,
+    CartModule,
     ProductsModule,
+    CategoriesModule,
     FileUploadModule,
     AuthModule,
   ],
@@ -36,5 +40,3 @@ import { JwtModule } from '@nestjs/jwt';
   providers: [AppService],
 })
 export class AppModule {}
-
-//holaaaa

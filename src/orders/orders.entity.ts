@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { OrderDetails } from './orderdetails.entity';
+import { Cart } from 'src/cart/cart.entity';
 
 @Entity({
   name: 'ORDERS',
@@ -23,4 +24,7 @@ export class Orders {
 
   @ManyToOne(() => Users, (user) => user.orders)
   user: Users;
+
+  @ManyToOne(() => Cart, (cart) => cart.orders)
+  cart: Cart;
 }

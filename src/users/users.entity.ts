@@ -1,11 +1,6 @@
+import { Cart } from 'src/cart/cart.entity';
 import { Orders } from 'src/orders/orders.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   name: 'USERS',
@@ -49,7 +44,7 @@ export class Users {
   birthDate: Date;
 
   @Column({
-    type: 'int',
+    type: 'varchar',
   })
   phone: number;
 
@@ -71,6 +66,8 @@ export class Users {
   address: string;
 
   @OneToMany(() => Orders, (order) => order.user)
-  @JoinColumn({ name: 'orders_id' })
   orders: Orders[];
+
+  @OneToMany(() => Cart, (cart) => cart.users)
+  cart: Cart[];
 }
