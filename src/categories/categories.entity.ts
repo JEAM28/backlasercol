@@ -18,6 +18,5 @@ export class Categories {
   name: string;
 
   @OneToMany(() => Products, (products) => products.category)
-  @JoinColumn()
   products: Products[];
 }

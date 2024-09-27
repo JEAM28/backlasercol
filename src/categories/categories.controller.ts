@@ -7,7 +7,6 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Get()
-  @UseGuards(AuthGuard)
   getCategories() {
     return this.categoriesService.getCategories();
   }
