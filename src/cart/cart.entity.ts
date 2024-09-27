@@ -4,9 +4,10 @@ import { Users } from 'src/users/users.entity';
 import {
   Column,
   Entity,
-  ManyToOne,
+  OneToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity({
@@ -22,7 +23,8 @@ export class Cart {
   @OneToMany(() => Products, (products) => products.cart)
   products: Products[];
 
-  @ManyToOne(() => Users, (users) => users.cart)
+  @OneToOne(() => Users, (users) => users.cart)
+  @JoinColumn() 
   users: Users;
 
   @OneToMany(() => Orders, (orders) => orders.cart)

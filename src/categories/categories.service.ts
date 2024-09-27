@@ -6,14 +6,14 @@ import { Repository } from 'typeorm';
 import * as data from '../data.json';
 
 @Injectable()
-export class CategoriesService implements OnModuleInit {
+export class CategoriesService {
   constructor(
     @InjectRepository(Categories)
     private categoriesRepository: Repository<Categories>,
   ) {}
 
-  async onModuleInit() {
-    const promises = data?.map(async (element) => {
+  onModuleInit() {
+    data?.map(async (element) => {
       await this.categoriesRepository
         .createQueryBuilder()
         .insert()
@@ -22,7 +22,6 @@ export class CategoriesService implements OnModuleInit {
         .onConflict(`("name") DO NOTHING`)
         .execute();
     });
-    await Promise.all(promises);
   }
 
   async getCategories() {

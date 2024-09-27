@@ -16,9 +16,9 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Post('create')
-  createCart(@Body('userId') userId?: string): Promise<Cart> {
-    return this.cartService.createCart(userId);
-  }
+  createCart(@Body() body: { userId?: string }): Promise<Cart> {
+      return this.cartService.createCart(body.userId);
+  }  
 
   @Get(':id')
   getCartById(@Param('id') cartId: string): Promise<Cart> {

@@ -4,6 +4,7 @@ import { OrderDetails } from 'src/orders/orderdetails.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -69,5 +70,8 @@ export class Products {
   orderDetail: OrderDetails[];
 
   @ManyToOne(() => Categories, (category) => category.products)
+  @JoinColumn({
+    name: 'category',
+  })
   category: Categories;
 }

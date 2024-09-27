@@ -4,12 +4,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Categories } from 'src/categories/categories.entity';
 import * as data from '../data.json';
+import { CategoriesService } from 'src/categories/categories.service';
 
 @Injectable()
 export class ProductsService implements OnModuleInit {
   constructor(
     @InjectRepository(Products)
     private productsRepository: Repository<Products>,
+    private categoriesService: CategoriesService,
     @InjectRepository(Categories)
     private categoriesRepository: Repository<Categories>,
   ) {}
@@ -17,10 +19,12 @@ export class ProductsService implements OnModuleInit {
   async onModuleInit() {
     const count = await this.productsRepository.count();
     if (count === 0) {
+      console.log('La tabla de productos está vacía. Precargando datos...');
       await this.addProductsSeeder();
+    } else {
+      console.log('La tabla de productos ya tiene datos.');
     }
   }
-
   async getProducts(page: number, limit: number): Promise<Products[]> {
     let products = await this.productsRepository.find({
       relations: {
@@ -43,7 +47,6 @@ export class ProductsService implements OnModuleInit {
         (category) => category.name === element.category,
       );
       const product = new Products();
-
       product.nombre = element.nombre;
       product.color = element.color;
       product.material = element.material;
@@ -52,7 +55,6 @@ export class ProductsService implements OnModuleInit {
       product.valor = element.valor;
       product.imgUrl = element.imgUrl;
       product.category = category;
-
       await this.productsRepository
         .createQueryBuilder()
         .insert()
@@ -62,7 +64,6 @@ export class ProductsService implements OnModuleInit {
     });
     return 'productos agregados';
   }
-
   async getProductById(id: string) {
     const product = await this.productsRepository.findOneBy({ id });
     if (!product) {

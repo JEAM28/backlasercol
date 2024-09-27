@@ -33,7 +33,7 @@ export class ProductsController {
     return this.productsService.getProductByName(nombre);
   }
 
-  @Get('category/:category')
+  @Get(':category/:category')
   getProductByCategory(@Param('category') category: string) {
     return this.productsService.getProductByCategory(category);
   }
