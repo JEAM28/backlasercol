@@ -46,8 +46,8 @@ export class ProductsController {
   }
 
   @Post()
-  @Roles(Role.Admin)
-  @UseGuards(AuthGuard, RolesGuard)
+  //@Roles(Role.Admin)
+  //@UseGuards(AuthGuard, RolesGuard)
   addProduct(@Body() product: Partial<Products>) {
     return this.productsService.addProduct(product);
   }
