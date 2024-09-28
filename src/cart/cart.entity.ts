@@ -24,9 +24,12 @@ export class Cart {
   products: Products[];
 
   @OneToOne(() => Users, (users) => users.cart)
-  @JoinColumn() 
+  @JoinColumn()
   users: Users;
 
+  @Column({ nullable: true }) // Add this line to define the foreign key explicitly
+  usersId: string;  // This will store the actual `userId`
+  
   @OneToMany(() => Orders, (orders) => orders.cart)
   orders: Orders[];
 }
