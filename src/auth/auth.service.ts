@@ -52,10 +52,11 @@ export class AuthService {
     };
 
     const token = this.jwtService.sign(userPayload);
-
+    const id = userFound.id
     return {
       message: 'El usuario ha iniciado sesion correctamente',
       token,
+      id
     };
   }
 }
