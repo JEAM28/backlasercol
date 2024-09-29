@@ -3,7 +3,11 @@ import { OrdersService } from './orders.service';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Cart } from 'src/cart/cart.entity';
 import { Orders } from './orders.entity';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags("Orders")
+@ApiBearerAuth()
 @Controller('orders')
 @UseGuards(AuthGuard)
 export class OrdersController {

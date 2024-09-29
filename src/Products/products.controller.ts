@@ -15,7 +15,9 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/roles.enum';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags("Products")
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
@@ -44,6 +46,7 @@ export class ProductsController {
   }
 
   @Post()
+  @ApiBearerAuth()
   //@Roles(Role.Admin)
   //@UseGuards(AuthGuard, RolesGuard)
   addProduct(@Body() product: Partial<Products>) {
@@ -51,6 +54,7 @@ export class ProductsController {
   }
 
   @Put(':id')
+  @ApiBearerAuth()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
   editProduct(@Param('id') id: string, @Body() product: Partial<Products>) {
@@ -58,6 +62,7 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
   deleteProduct(@Param('id') id: string) {
