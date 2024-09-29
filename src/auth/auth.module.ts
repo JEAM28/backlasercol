@@ -15,7 +15,7 @@ import { JwtModule } from '@nestjs/jwt';
     signOptions: {expiresIn: '1h'},
   }),
   ConfigModule.forRoot({
-    isGlobal: true, // Hacer que ConfigModule esté disponible globalmente
+    isGlobal: true,
   }),
 ],
   controllers: [AuthController],

@@ -10,7 +10,10 @@ import {
 import { CartService } from './cart.service';
 import { Cart } from './cart.entity';
 import { CartResponse } from './cart.interface';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags("Cart")
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
