@@ -39,12 +39,15 @@ export class Cart {
     description: 'Usuario propietario del carrito.',
   })
   @OneToOne(() => Users, (users) => users.cart)
-  @JoinColumn() 
+  @JoinColumn()
   users: Users;
-
+  @Column({ nullable: true }) // Add this line to define the foreign key explicitly
+  usersId: string;  // This will store the actual `userId`
+  
   @ApiProperty({
     description: 'Lista de órdenes asociadas al carrito.',
   })
   @OneToMany(() => Orders, (orders) => orders.cart)
   orders: Orders[];
+  
 }

@@ -22,7 +22,7 @@ const config = {
   synchronize: true,
   logging: false,
   autoLoadEntities: true,
-  dropSchema: true,
+  dropSchema: false,
 };
 
 export default registerAs('typeorm', () => config);

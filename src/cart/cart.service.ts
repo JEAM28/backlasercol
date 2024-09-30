@@ -98,12 +98,14 @@ export class CartService {
     return total;
   }
 
-  async getCartById(cartId: string): Promise<Cart> {
-    return await this.cartRepository.findOne({
-      where: { id: cartId },
+  async getCartById(userId: string): Promise<Cart> {
+    const cartFound = await this.cartRepository.findOne({
+      where: { usersId: userId }, // Now you can safely use `usersId`
       relations: { products: true },
     });
+    return cartFound;
   }
+  
 
   async mergeCart(cartId: string, userId: string): Promise<Cart> {
     const cart = await this.getCartById(cartId);
