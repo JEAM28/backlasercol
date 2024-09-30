@@ -12,7 +12,11 @@ import {
 import { FileUploadService } from './fileUpload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags("FileUpload")
+@ApiBearerAuth()
 @Controller('file')
 @UseGuards(AuthGuard)
 export class FileUploadController {
