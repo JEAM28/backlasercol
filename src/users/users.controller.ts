@@ -39,7 +39,7 @@ export class UsersController {
   @Get(':id')
   // @Roles(Role.Admin)
   // @UseGuards(AuthGuard, RolesGuard)
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   getUserById(@Param('id') id: string) {
     return this.usersService.getUserById(id);
   }
