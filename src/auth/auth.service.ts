@@ -3,10 +3,15 @@ import { JwtService } from '@nestjs/jwt';
 import { Users } from 'src/users/users.entity';
 import { UsersService } from 'src/users/users.service';
 import * as brypt from 'bcrypt';
+import { loginGoogleUser } from 'src/types/login.google.user';
+import { GoogleRegisterUser } from 'src/types/register.google.user';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
+    @InjectRepository(Users) private readonly userRepository: Repository<Users>,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
   ) {}
@@ -48,15 +53,34 @@ export class AuthService {
     const userPayload = {
       id: userFound.id,
       email: userFound.email,
-      isAdmin: userFound.isAdmin
+      isAdmin: userFound.isAdmin,
     };
 
     const token = this.jwtService.sign(userPayload);
-    const id = userFound.id
+    const id = userFound.id;
     return {
       message: 'El usuario ha iniciado sesion correctamente',
       token,
-      id
+      id,
     };
+  }
+  async googleLogin(details: loginGoogleUser) {
+    const customer = await this.usersService.getUserByEmail(details.email);
+
+    if (!customer) {
+      return 'googleLoginError';
+    }
+    if (customer) {
+      return customer;
+    }
+  }
+  async googleRegisterCustomer(details: GoogleRegisterUser) {
+    const foundCostumer = await this.usersService.getUserByEmail(details.email);
+
+    if (foundCostumer) return 'GoogleRegisterError=userExists';
+
+    const newCostumer = await this.userRepository.save(details);
+    if (!newCostumer) return 'googleRegisterError=internalError';
+    return newCostumer;
   }
 }
