@@ -10,6 +10,8 @@ import { LoginGoogleAuthGuard } from 'src/guards/login.google.guard';
 import { loginGoogleStrategy } from 'src/strategies/login.google.strategy';
 import { Repository } from 'typeorm';
 import { UsersModule } from 'src/users/users.module';
+import { PassportModule } from '@nestjs/passport';
+import { RegisterGoogleStrategy } from 'src/strategies/register.google.strategy';
 
 @Module({
   imports: [
@@ -20,6 +22,7 @@ import { UsersModule } from 'src/users/users.module';
       signOptions: { expiresIn: '1h' },
     }),
     UsersModule,
+    PassportModule.register({ defaultStrategy: 'google-register' }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -30,6 +33,7 @@ import { UsersModule } from 'src/users/users.module';
     UsersService,
     LoginGoogleAuthGuard,
     loginGoogleStrategy,
+    RegisterGoogleStrategy,
   ],
 })
 export class AuthModule {}
