@@ -16,6 +16,7 @@ import { RolesGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/roles.enum';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CreateProductDTO } from './products.dto';
 
 @ApiTags("Products")
 @Controller('products')
@@ -83,9 +84,9 @@ export class ProductsController {
       Solo los usuarios autenticados y autorizados pueden realizar esta operación.
     `
   })
-  //@Roles(Role.Admin)
-  //@UseGuards(AuthGuard, RolesGuard)
-  addProduct(@Body() product: Partial<Products>) {
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
+  addProduct(@Body() product: CreateProductDTO) {
     return this.productsService.addProduct(product);
   }
 
@@ -101,7 +102,7 @@ export class ProductsController {
   })
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
-  editProduct(@Param('id') id: string, @Body() product: Partial<Products>) {
+  editProduct(@Param('id') id: string, @Body() product: CreateProductDTO) {
     return this.productsService.editProduct(id, product);
   }
 

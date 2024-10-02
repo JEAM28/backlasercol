@@ -10,7 +10,7 @@ import {
 import { CartService } from './cart.service';
 import { Cart } from './cart.entity';
 import { CartResponse } from './cart.interface';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 
 @ApiTags("Cart")
@@ -24,6 +24,15 @@ export class CartController {
     description: `
     Esta ruta permite crear un nuevo carrito. Opcionalmente, se puede asociar el carrito a un usuario proporcionando su 'userId'.
     `
+  })
+  @ApiBody({
+    description: 'Objeto opcional con el userId',
+    schema: {
+      type: 'object',
+      properties: {
+        userId: { type: 'string', example: '123456' }
+      }
+    }
   })
   createCart(@Body() body: { userId?: string }): Promise<Cart> {
       return this.cartService.createCart(body.userId);
