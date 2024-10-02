@@ -12,7 +12,7 @@ import {
 import { FileUploadService } from './fileUpload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from 'src/guards/auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 
 @ApiTags("FileUpload")
@@ -24,6 +24,15 @@ export class FileUploadController {
 
   @Post('uploadImage/:id')
   @UseInterceptors(FileInterceptor('file'))
+  @ApiOperation({
+    summary: "Subir una imagen para un producto",
+    description: `
+      Esta ruta permite subir una imagen para un producto específico, identificado por su ID. 
+      Se debe proporcionar el ID del producto en el parámetro de la URL y el archivo de imagen en el cuerpo de la solicitud.
+      Las imágenes permitidas son de tipo JPG, JPEG, PNG y WEBP, y el tamaño máximo permitido es de 200 KB.
+      La ruta requiere autenticación mediante token Bearer, y los usuarios deben estar autenticados para poder realizar esta operación.
+    `
+  })
   uploadImage(
     @Param('id') productId: string,
     @UploadedFile(
