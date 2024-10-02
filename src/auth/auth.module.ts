@@ -18,9 +18,9 @@ import { RegisterGoogleStrategy } from 'src/strategies/register.google.strategy'
     TypeOrmModule.forFeature([Users]),
     JwtModule.register({
       global: true,
-      secret: process.env.JWT_SECRET,
+      secret: process.env.JWT_SECRET || 'yourFallbackJwtSecret', // fallback in case env is not loaded
       signOptions: { expiresIn: '1h' },
-    }),
+    }),    
     UsersModule,
     PassportModule.register({ defaultStrategy: 'google-register' }),
     ConfigModule.forRoot({
