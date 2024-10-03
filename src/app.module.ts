@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { CartModule } from './cart/cart.module';
 import { OrdersModule } from './orders/orders.module';
+import { AdminModule } from 'src/admin/admin.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { OrdersModule } from './orders/orders.module';
     CategoriesModule,
     FileUploadModule,
     AuthModule,
+    AdminModule,
   ],
   controllers: [HomeController],
   providers: [AppService],
