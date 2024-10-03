@@ -1,0 +1,162 @@
+[
+  {
+    "nombre": "Relicario",
+    "color": "Dorado",
+    "material": "Acero Inoxidable",
+    "medidas": "30 x 30 mm",
+    "stock": 5,
+    "valor": 50000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.37_AM_lwujbd.jpg",
+    "category": "collares"
+  },
+  {
+    "nombre": "Relicario",
+    "color": "Plateado",
+    "material": "Acero Inoxidable",
+    "medidas": "30 x 30 mm",
+    "stock": 5,
+    "valor": 50000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.37_AM_1_jptoz7.jpg",
+    "category": "collares"
+  },
+  {
+    "nombre": "Collar de corazon",
+    "color": "Dorado",
+    "material": "Acero Inoxidable",
+    "medidas": "32 x 30 mm",
+    "stock": 10,
+    "valor": 48000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.39_AM_1_ciyb0m.jpg",
+    "category": "collares"
+  },
+  {
+    "nombre": "Collar de corazon",
+    "color": "Plateado",
+    "material": "Acero Inoxidable",
+    "medidas": "32 x 30 mm",
+    "stock": 8,
+    "valor": 48000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.38_AM_dvh01d.jpg",
+    "category": "collares"
+  },
+  {
+    "nombre": "Collar circular",
+    "color": "Dorado",
+    "material": "Acero Inoxidable",
+    "medidas": "30 x 30 mm",
+    "stock": 6,
+    "valor": 48000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.38_AM_1_e1m7ks.jpg",
+    "category": "collares"
+  },
+  {
+    "nombre": "Collar circular",
+    "color": "Plateado",
+    "material": "Acero Inoxidable",
+    "medidas": "30 x 30 mm",
+    "stock": 6,
+    "valor": 48000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.39_AM_lrwjqv.jpg",
+    "category": "collares"
+  },
+  {
+    "nombre": "Llavero placa",
+    "color": "Plateado",
+    "material": "Acero Inoxidable",
+    "medidas": "30 x 50 mm",
+    "stock": 6,
+    "valor": 40000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.41_AM_1_q8fukk.jpg",
+    "category": "llaveros"
+  },
+  {
+    "nombre": "Llavero placa",
+    "color": "Dorado",
+    "material": "Acero Inoxidable",
+    "medidas": "30 x 50 mm",
+    "stock": 4,
+    "valor": 40000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106758/WhatsApp_Image_2024-09-23_at_10.48.41_AM_ed1rpu.jpg",
+    "category": "llaveros"
+  },
+  {
+    "nombre": "Llavero con placa adicional",
+    "color": "Plateado",
+    "material": "Acero Inoxidable",
+    "medidas": "30 x 50 y 30 x 30 mm",
+    "stock": 6,
+    "valor": 45000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.40_AM_1_y9oqhj.jpg",
+    "category": "llaveros"
+  },
+  {
+    "nombre": "Llavero con placa adicional",
+    "color": "Dorado",
+    "material": "Acero Inoxidable",
+    "medidas": "30 x 50 y 30 x 30 mm",
+    "stock": 6,
+    "valor": 45000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.40_AM_lvds5l.jpg",
+    "category": "llaveros"
+  },
+  {
+    "nombre": "Placa hueso grande",
+    "color": "Dorado",
+    "material": "Acero Inoxidable",
+    "medidas": "50 x 28 mm",
+    "stock": 8,
+    "valor": 25000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106758/WhatsApp_Image_2024-09-23_at_10.48.43_AM_s0m0dm.jpg",
+    "category": "placasmascotas"
+  },
+  {
+    "nombre": "Placa hueso grande",
+    "color": "Plateado",
+    "material": "Acero Inoxidable",
+    "medidas": "50 x 28 mm",
+    "stock": 10,
+    "valor": 25000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106758/WhatsApp_Image_2024-09-23_at_10.48.42_AM_1_xyyp5j.jpg",
+    "category": "placasmascotas"
+  },
+  {
+    "nombre": "Placa hueso pequeño",
+    "color": "Oro rosa",
+    "material": "Acero Inoxidable",
+    "medidas": "40 x 22 mm",
+    "stock": 6,
+    "valor": 22000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.42_AM_nqze2h.jpg",
+    "category": "placasmascotas"
+  },
+  {
+    "nombre": "Manilla de identificacion",
+    "color": "Negro",
+    "material": "Acero Inoxidable y silicona",
+    "medidas": "32 x 12 mm",
+    "stock": 10,
+    "valor": 40000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106758/WhatsApp_Image_2024-09-23_at_10.48.50_AM_annprb.jpg",
+    "category": "manillasID"
+  },
+  {
+    "nombre": "Manilla de identificacion",
+    "color": "Rosado",
+    "material": "Acero Inoxidable y silicona",
+    "medidas": "32 x 12 mm",
+    "stock": 10,
+    "valor": 40000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106758/WhatsApp_Image_2024-09-23_at_10.48.49_AM_ujni4x.jpg",
+    "category": "manillasID"
+  },
+  {
+    "nombre": "Manilla de identificacion",
+    "color": "Blanco",
+    "material": "Acero Inoxidable y silicona",
+    "medidas": "32 x 12 mm",
+    "stock": 10,
+    "valor": 40000.0,
+    "imgUrl": "https://res.cloudinary.com/dhu3z3pfo/image/upload/v1727106759/WhatsApp_Image_2024-09-23_at_10.48.49_AM_1_ioz1hl.jpg",
+    "category": "manillasID"
+  }
+]
