@@ -4,12 +4,15 @@ import { LessThan, Repository } from 'typeorm';
 import { DiscountCode } from './code.entity';
 import { addDays, formatDate } from 'date-fns';
 import { format } from 'date-fns';
+import { Cart } from 'src/cart/cart.entity';
 
 @Injectable()
 export class DiscountService {
   constructor(
     @InjectRepository(DiscountCode)
     private readonly discountCodeRepository: Repository<DiscountCode>,
+    @InjectRepository(Cart)
+    private readonly cartRepository: Repository<Cart>,
   ) {}
 
   generateDiscountCode(length: number = 7): string {
@@ -53,7 +56,11 @@ export class DiscountService {
     };
   }
 
-  async applyDiscountCode(code: string, cartTotal: number): Promise<string> {
+  async applyDiscountCode(
+    cartId: string,
+    code: string,
+    cartTotal: number,
+  ): Promise<string> {
     const discount = await this.discountCodeRepository.findOne({
       where: { code },
     });
@@ -69,6 +76,12 @@ export class DiscountService {
 
     if (discount.expiresAt && discount.expiresAt < now) {
       return 'El código de descuento ha vencido.';
+    }
+
+    const cart = await this.cartRepository.findOneBy({ id: cartId });
+    if (cart) {
+      discount.cart = cart;
+      await this.discountCodeRepository.save(discount);
     }
 
     discount.used = true;
