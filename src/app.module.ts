@@ -15,6 +15,7 @@ import { OrdersModule } from './orders/orders.module';
 import { AdminModule } from 'src/admin/admin.module';
 import { EmailModule } from './email/email.module';
 import { EmailService } from './email/email.service';
+import { DiscountModule } from './code/code.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { EmailService } from './email/email.service';
     AuthModule,
     AdminModule,
     EmailModule,
+    DiscountModule,
   ],
   controllers: [HomeController],
   providers: [AppService, EmailService],

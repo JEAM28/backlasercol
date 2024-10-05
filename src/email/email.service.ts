@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 import { config as dotenvConfig } from 'dotenv';
-import { from } from 'rxjs';
 import { CreateUserDTO } from 'src/users/users.dto';
 import * as path from 'path';
 import * as fs from 'fs';
 
-dotenvConfig({ path: '.env' });
+dotenvConfig({ path: '../../env' });
 
 console.log(process.env.EMAIL);
 console.log(process.env.EMAIL_PASSWORD);
@@ -17,18 +16,18 @@ export class EmailService {
   constructor() {
     this.transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
-      port: 465,
+      port: 685,
       secure: true,
       auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
+        user: 'pflasercol@gmail.com',
+        pass: 'jdxl kdjc ujmd kfxe',
       },
     });
   }
   async sendMail(to: string, subject: string, text: string, html: string) {
     console.log('Contenido HTML enviado:', html);
     const mailOptions = {
-      from: process.env.EMAIL,
+      from: 'pflasercol@gmail.com',
       to: to,
       subject: subject,
       text: text,
