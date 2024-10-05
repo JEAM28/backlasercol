@@ -16,7 +16,7 @@ export class RegisterGoogleStrategy extends PassportStrategy(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL:
         'http://localhost:3000/auth/api/callback/google/register/customer',
-      Scope: ['profile', 'email'],
+      scope: ['profile', 'email'],
       state: true,
     });
   }

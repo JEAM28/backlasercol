@@ -13,12 +13,15 @@ import { JwtModule } from '@nestjs/jwt';
 import { CartModule } from './cart/cart.module';
 import { OrdersModule } from './orders/orders.module';
 import { AdminModule } from 'src/admin/admin.module';
+import { EmailModule } from './email/email.module';
+import { EmailService } from './email/email.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeorm],
+      envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
@@ -37,8 +40,9 @@ import { AdminModule } from 'src/admin/admin.module';
     FileUploadModule,
     AuthModule,
     AdminModule,
+    EmailModule,
   ],
   controllers: [HomeController],
-  providers: [AppService],
+  providers: [AppService, EmailService],
 })
 export class AppModule {}
