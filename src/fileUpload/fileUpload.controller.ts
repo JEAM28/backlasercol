@@ -48,7 +48,7 @@ export class FileUploadController {
     return this.fileUploadService.uploadImage(file, productId);
   }
 
-  @Post('uploadImage/:id')
+  @Post('uploadImageUser/:id')
   @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({
     summary: "Subir una imagen de perfil para un usuario",
