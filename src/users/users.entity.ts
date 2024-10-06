@@ -104,6 +104,16 @@ export class Users {
   address: string;
 
   @ApiProperty({
+    description: 'Imagen de perfil del usuario, con una URL por defecto.',
+    example: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+  })
+  @Column({
+    type: 'varchar',
+    default: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+  })
+  profileImage: string;
+
+  @ApiProperty({
     description: 'Indica si el usuario tiene privilegios de administrador.',
     example: false,
   })

@@ -47,4 +47,31 @@ export class FileUploadController {
   ) {
     return this.fileUploadService.uploadImage(file, productId);
   }
+
+  @Post('uploadImage/:id')
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiOperation({
+    summary: "Subir una imagen de perfil para un usuario",
+    description: `
+      Esta ruta permite subir una imagen de perfil para un usuario específico, identificado por su ID. 
+      Se debe proporcionar el ID del usuario en el parámetro de la URL y el archivo de imagen en el cuerpo de la solicitud.
+      Las imágenes permitidas son de tipo JPG, JPEG, PNG y WEBP, y el tamaño máximo permitido es de 200 KB.
+      La ruta requiere autenticación mediante un token Bearer, y los usuarios deben estar autenticados para poder realizar esta operación.
+    `
+  })
+  userImage(
+    @Param('id') userId: string,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 200000 }),
+          new FileTypeValidator({ fileType: /(jpg|jpeg|png|webp)$/ }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.fileUploadService.userImage(file, userId);
+  }
+
 }
