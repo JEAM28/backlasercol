@@ -5,7 +5,7 @@ import { CreateUserDTO } from 'src/users/users.dto';
 import * as path from 'path';
 import * as fs from 'fs';
 
-dotenvConfig({ path: '../../env' });
+dotenvConfig({ path: '.env' });
 
 @Injectable()
 export class EmailService {
@@ -14,11 +14,11 @@ export class EmailService {
   constructor() {
     this.transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
-      port: 685,
+      port: 465,
       secure: true,
       auth: {
-        user: 'pflasercol@gmail.com',
-        pass: 'jdxl kdjc ujmd kfxe',
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
       },
     });
   }
@@ -43,7 +43,7 @@ export class EmailService {
 
   async sendMail(to: string, subject: string, text: string, name: string) {
     const mailOptions = {
-      from: 'pflasercol@gmail.com',
+      from: process.env.EMAIL,
       to: to,
       subject: 'Bienvenid@ a nuestra Plataforma',
       text: text,
