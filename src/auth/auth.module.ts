@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import { UsersModule } from 'src/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { RegisterGoogleStrategy } from 'src/strategies/register.google.strategy';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { RegisterGoogleStrategy } from 'src/strategies/register.google.strategy'
       signOptions: { expiresIn: '1h' },
     }),
     UsersModule,
+    EmailModule,
     PassportModule.register({ defaultStrategy: 'google-register' }),
     ConfigModule.forRoot({
       isGlobal: true,
