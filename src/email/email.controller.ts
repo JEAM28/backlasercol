@@ -12,7 +12,7 @@ export class EmailController {
     @Body('to') to: string,
     @Body('subject') subject: string,
     @Body('text') text: string,
-    @Body('html') html: string,
+    @Body('name') html: string,
   ) {
     return await this.emailService.sendMail(to, subject, text, html);
   }
