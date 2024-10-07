@@ -15,7 +15,7 @@ export class RegisterGoogleStrategy extends PassportStrategy(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL:
-        'https://back-deploy-5y3a.onrender.com/auth/api/callback/google/register/customer',
+        'https://lasercol.vercel.app/auth/api/callback/google/register/customer',
       scope: ['profile', 'email'],
     });
   }
