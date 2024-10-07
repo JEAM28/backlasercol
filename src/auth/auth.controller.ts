@@ -68,16 +68,12 @@ export class AuthController {
   @UseGuards(LoginGoogleAuthGuard)
   async googleLoginAuthRedirect(@Req() req: Request, @Res() res: Response) {
     const user: any = req.user;
-    if (user !== null && typeof user === 'object' && !Array.isArray(user)) {
-      const payload = {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      };
+    if (user && typeof user === 'object') {
+      const payload = { id: user.id, name: user.name, email: user.email };
       const token = this.jwtService.sign(payload);
-      if (payload.email) res.redirect(`http://localhost:4000/?token=${token}`);
-    } else if (typeof user === 'string') {
-      res.redirect(`http://localhost:4000/register?${user}=userDoesNotExist`);
+      res.redirect(`https://lasercol.vercel.app/?token=${token}`);
+    } else {
+      res.redirect(`https://lasercol.vercel.app/register?user=DoesNotExist`);
     }
   }
 
@@ -89,10 +85,10 @@ export class AuthController {
   @UseGuards(CustomerGoogleAuthGuard)
   async googleCustomerAuthRedirect(@Req() req: Request, @Res() res: Response) {
     const user: any = req.user;
-    if (user !== null && typeof user === 'object' && !Array.isArray(user)) {
-      res.redirect('http://localhost:4000/login');
-    } else if (typeof user === 'string') {
-      res.redirect(`http://localhost:4000/register?${user}`);
+    if (user && typeof user === 'object') {
+      res.redirect('https://lasercol.vercel.app/login');
+    } else {
+      res.redirect(`https://lasercol.vercel.app/register?error=userExists`);
     }
   }
 }
