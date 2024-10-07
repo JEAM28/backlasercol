@@ -64,23 +64,20 @@ export class AuthService {
       id,
     };
   }
-  async googleLogin(details: loginGoogleUser) {
-    const customer = await this.usersService.getUserByEmail(details.email);
-
-    if (!customer) {
-      return 'googleLoginError';
-    }
-    if (customer) {
-      return customer;
-    }
+  async googleLogin(details: { email: string }) {
+    const user = await this.usersService.getUserByEmail(details.email);
+    return user || 'googleLoginError';
   }
-  async googleRegisterCustomer(details: GoogleRegisterUser) {
-    const foundCostumer = await this.usersService.getUserByEmail(details.email);
 
-    if (foundCostumer) return 'GoogleRegisterError=userExists';
+  async googleRegisterCustomer(details: {
+    email: string;
+    name: string;
+    lastName: string;
+  }) {
+    const user = await this.usersService.getUserByEmail(details.email);
+    if (user) return 'GoogleRegisterError=userExists';
 
-    const newCostumer = await this.userRepository.save(details);
-    if (!newCostumer) return 'googleRegisterError=internalError';
-    return newCostumer;
+    const newUser = await this.userRepository.save(details);
+    return newUser || 'googleRegisterError=internalError';
   }
 }

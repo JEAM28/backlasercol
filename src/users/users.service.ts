@@ -38,10 +38,10 @@ export class UsersService {
   }
 
   async updateUser(id: string, user: CreateUserDTO) {
-    const {passwordConfirmation, ...userNoConfirmPassword } = user
-    await this.userRepository.update(id, userNoConfirmPassword)
-    const updatedUser = await this.userRepository.findOneBy({ id })
-    const { password, ...userNoPassword} = updatedUser
+    const { passwordConfirmation, ...userNoConfirmPassword } = user;
+    await this.userRepository.update(id, userNoConfirmPassword);
+    const updatedUser = await this.userRepository.findOneBy({ id });
+    const { password, ...userNoPassword } = updatedUser;
     return userNoPassword;
   }
 
@@ -51,7 +51,7 @@ export class UsersService {
     return `usuario con id: ${id} se elimino correctamente`;
   }
 
-  async getUserByEmail(email: string) {
-    return await this.userRepository.findOneBy({ email });
+  async getUserByEmail(email: string): Promise<Users | undefined> {
+    return this.userRepository.findOne({ where: { email } });
   }
 }

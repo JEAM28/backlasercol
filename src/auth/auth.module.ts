@@ -7,11 +7,12 @@ import { Users } from 'src/users/users.entity';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { LoginGoogleAuthGuard } from 'src/guards/login.google.guard';
-import { loginGoogleStrategy } from 'src/strategies/login.google.strategy';
+import { LoginGoogleStrategy } from 'src/strategies/login.google.strategy';
 import { Repository } from 'typeorm';
 import { UsersModule } from 'src/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { RegisterGoogleStrategy } from 'src/strategies/register.google.strategy';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { RegisterGoogleStrategy } from 'src/strategies/register.google.strategy'
       signOptions: { expiresIn: '1h' },
     }),    
     UsersModule,
-    PassportModule.register({ defaultStrategy: 'google-register' }),
+    EmailModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -32,7 +34,7 @@ import { RegisterGoogleStrategy } from 'src/strategies/register.google.strategy'
     AuthService,
     UsersService,
     LoginGoogleAuthGuard,
-    loginGoogleStrategy,
+    LoginGoogleStrategy,
     RegisterGoogleStrategy,
   ],
 })

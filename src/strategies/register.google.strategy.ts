@@ -15,9 +15,8 @@ export class RegisterGoogleStrategy extends PassportStrategy(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL:
-        'http://localhost:3000/auth/api/callback/google/register/customer',
+        'https://back-deploy-5y3a.onrender.com/auth/api/callback/google/register/customer',
       scope: ['profile', 'email'],
-      state: true,
     });
   }
 
@@ -32,6 +31,6 @@ export class RegisterGoogleStrategy extends PassportStrategy(
       name: profile.name.givenName,
       lastName: profile.name.familyName,
     });
-    return user || null;
+    done(null, user);
   }
 }
