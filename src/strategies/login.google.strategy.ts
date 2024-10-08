@@ -15,7 +15,7 @@ export class LoginGoogleStrategy extends PassportStrategy(
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'https://lasercol.vercel.app/auth/api/callback/google/login',
+      callbackURL: 'https://back-deploy-5y3a.onrender.com/auth/api/callback/google/login',
       scope: ['profile', 'email'],
     });
   }

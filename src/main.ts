@@ -14,7 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   console.log("bruno")
   app.enableCors({
-    origin: 'https://lasercol.vercel.app', // Especifica el origen permitido
+    origin: '*', // Especifica el origen permitido
     credentials: true, // Permitir credenciales como cookies
   });
   
