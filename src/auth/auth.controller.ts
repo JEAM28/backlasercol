@@ -78,7 +78,7 @@ export class AuthController {
       const sessionInfo = payload
       sessionInfo["token"] = token;
       
-      res.cookie('userInfo', JSON.stringify(sessionInfo), { httpOnly: false });
+      res.cookie('userInfo', JSON.stringify(sessionInfo), { httpOnly: false, secure:true, sameSite:'none' });
       res.redirect(`https://lasercol.vercel.app/`);
     } else {
       res.redirect(`https://lasercol.vercel.app/register?user=DoesNotExist`); 
