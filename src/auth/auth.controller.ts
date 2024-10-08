@@ -67,15 +67,21 @@ export class AuthController {
   async googleLoginAuth(@Req() req: Request) {}
 
   @Get('api/callback/google/login')
-  @UseGuards(LoginGoogleAuthGuard)
+  @UseGuards(AuthGuard('google-login'))
   async googleLoginAuthRedirect(@Req() req: Request, @Res() res: Response) {
     const user: any = req.user;
+    console.log(user.id);
+    
     if (user && typeof user === 'object') {
       const payload = { id: user.id, name: user.name, email: user.email };
       const token = this.jwtService.sign(payload);
-      res.redirect(`https://lasercol.vercel.app/?token=${token}`);
+      const sessionInfo = payload
+      sessionInfo["token"] = token;
+      
+      res.cookie('userInfo', JSON.stringify(sessionInfo), { httpOnly: false });
+      res.redirect(`https://lasercol.vercel.app/`);
     } else {
-      res.redirect(`https://lasercol.vercel.app/register?user=DoesNotExist`);
+      res.redirect(`https://lasercol.vercel.app/register?user=DoesNotExist`); 
     }
   }
 
@@ -88,7 +94,7 @@ export class AuthController {
   async googleCustomerAuthRedirect(@Req() req: Request, @Res() res: Response) {
     const user: any = req.user;    
     if (user && typeof user === 'object') {
-      res.redirect('http://localhost:4000/login');
+      res.redirect('https://lasercol.vercel.app/login');
     } else {
       res.redirect(`https://lasercol.vercel.app/register?error=userExists`);
     }
