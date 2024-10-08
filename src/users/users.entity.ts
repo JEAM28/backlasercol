@@ -18,7 +18,7 @@ export class Users {
   @Column({
     type: 'varchar',
     length: 50,
-    nullable: false,
+    nullable: true,
   })
   name: string;
 
@@ -40,7 +40,7 @@ export class Users {
   })
   @Column({
     type: 'text',
-    nullable: false,
+    nullable: true,
   })
   password: string;
 
@@ -52,6 +52,7 @@ export class Users {
     type: 'varchar',
     length: 50,
     unique: true,
+    nullable: true
   })
   Dni: string;
 
@@ -61,7 +62,7 @@ export class Users {
   })
   @Column({
     type: 'date',
-    nullable: false,
+    nullable: true,
   })
   birthDate: Date;
 
@@ -71,6 +72,7 @@ export class Users {
   })
   @Column({
     type: 'varchar',
+    nullable: true,
   })
   phone: number;
 
@@ -81,6 +83,7 @@ export class Users {
   @Column({
     type: 'varchar',
     length: 50,
+    nullable: true,
   })
   country: string;
 
@@ -91,6 +94,7 @@ export class Users {
   @Column({
     type: 'varchar',
     length: 50,
+    nullable: true,
   })
   city: string;
 
@@ -100,6 +104,7 @@ export class Users {
   })
   @Column({
     type: 'text',
+    nullable: true,
   })
   address: string;
 
