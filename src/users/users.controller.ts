@@ -16,12 +16,14 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/roles.enum';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-
+import { JwtService } from '@nestjs/jwt';
 @ApiTags('Users')
 @Controller('users')
 @ApiBearerAuth()
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) { }
 
   @Get()
   @Roles(Role.Admin)
@@ -65,9 +67,31 @@ export class UsersController {
     `,
   })
   getUserById(@Param('id') id: string) {
+
+
     return this.usersService.getUserById(id);
   }
 
+  @Get('session/:token')
+  @UseGuards(AuthGuard)
+  @ApiOperation({
+    summary: 'Obtener usuario por token',
+    description: `
+      Esta ruta devuelve la información de un usuario específico basado en su 'id'.
+      Se requiere estar autenticado para acceder a esta información, pero no es necesario ser administrador.
+    `,
+  })
+  async getUserByToken(@Param('token') token: string) {
+    let idUser = this.jwtService.decode(token)
+    let sessionInfo = await this.usersService.getUserById(idUser.id);
+    let infoToReturn = {
+      id: sessionInfo.id,
+      name: sessionInfo.name,
+      email: sessionInfo.email,
+      token: token
+    }
+    return infoToReturn
+  }
   @Put(':id')
   @UseGuards(AuthGuard)
   @ApiOperation({
