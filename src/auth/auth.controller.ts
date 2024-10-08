@@ -47,6 +47,7 @@ export class AuthController {
     );
     return newUser;
   }
+  
   @Post('/login')
   @ApiOperation({
     summary: 'Iniciar sesión de usuario',

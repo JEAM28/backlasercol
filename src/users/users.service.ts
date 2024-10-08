@@ -54,4 +54,8 @@ export class UsersService {
   async getUserByEmail(email: string): Promise<Users | undefined> {
     return this.userRepository.findOne({ where: { email } });
   }
+
+  async getUserByDni(Dni: string): Promise<Users | undefined> {
+    return this.userRepository.findOne({ where: { Dni } })
+  }
 }

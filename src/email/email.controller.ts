@@ -7,7 +7,6 @@ export class EmailController {
   constructor(private readonly emailService: EmailService) {}
 
   @Post(':send')
-  // @UseGuards(AuthGuard)
   async sendMail(
     @Body('to') to: string,
     @Body('subject') subject: string,

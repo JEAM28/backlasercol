@@ -8,11 +8,16 @@ import { config as dotenvConfig } from 'dotenv';
 import * as passport from 'passport';
 
 dotenvConfig({ path: '.env' });
+const PORT = process.env.PORT || 3000
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  app.enableCors();
+  console.log("bruno")
+  app.enableCors({
+    origin: 'https://lasercol.vercel.app', // Especifica el origen permitido
+    credentials: true, // Permitir credenciales como cookies
+  });
+  
   app.useGlobalPipes(new ValidationPipe());
   const options = new DocumentBuilder()
     .setTitle('NESTJS API - Ecommerce Lasercol')
@@ -36,6 +41,6 @@ async function bootstrap() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
-  await app.listen(3000);
+  await app.listen(PORT);
 }
 bootstrap();

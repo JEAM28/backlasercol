@@ -56,8 +56,6 @@ export class UsersController {
   }
 
   @Get(':id')
-  // @Roles(Role.Admin)
-  // @UseGuards(AuthGuard, RolesGuard)
   @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Obtener usuario por ID',
