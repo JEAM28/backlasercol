@@ -58,7 +58,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Obtener usuario por ID',
     description: `
@@ -73,7 +73,7 @@ export class UsersController {
   }
 
   @Get('session/:token')
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Obtener usuario por token',
     description: `
