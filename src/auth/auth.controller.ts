@@ -15,6 +15,7 @@ import { Request, Response } from 'express';
 import { LoginGoogleAuthGuard } from 'src/guards/login.google.guard';
 import { CustomerGoogleAuthGuard } from 'src/guards/register.google.guard';
 import { EmailService } from 'src/email/email.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -83,11 +84,11 @@ export class AuthController {
   async googleCustomerAuth(@Req() req: Request) {}
 
   @Get('api/callback/google/register/customer')
-  @UseGuards(CustomerGoogleAuthGuard)
+  @UseGuards(AuthGuard('google-register'))
   async googleCustomerAuthRedirect(@Req() req: Request, @Res() res: Response) {
-    const user: any = req.user;
+    const user: any = req.user;    
     if (user && typeof user === 'object') {
-      res.redirect('https://lasercol.vercel.app/login');
+      res.redirect('http://localhost:4000/login');
     } else {
       res.redirect(`https://lasercol.vercel.app/register?error=userExists`);
     }
