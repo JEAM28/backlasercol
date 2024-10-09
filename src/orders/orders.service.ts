@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Products } from 'src/Products/products.entity';
 import { Users } from 'src/users/users.entity';
@@ -98,4 +98,34 @@ export class OrdersService {
     }
     return order;
   }
+
+  async changeOrderStatus(orderId: string): Promise<string> {
+    const order = await this.ordersRepository.findOneBy({ id: orderId });
+
+    if (!order) {
+      throw new NotFoundException('La orden no fue encontrada.');
+    }
+
+    if (order.status === 'Recibido') {
+      throw new BadRequestException('La orden ya ha sido recibida.');
+    }
+
+    order.status = 'Recibido';
+    await this.ordersRepository.save(order);
+
+    return 'El estado de la orden ha sido actualizado a Recibido.';
+  }
+
+  async getOrdersByUserId(userId: string): Promise<Orders[]> {
+    const orders = await this.ordersRepository.find({
+      where: { user: { id: userId } },
+    });
+
+    if (orders.length === 0) {
+      throw new NotFoundException('No se encontraron órdenes para el usuario.');
+    }
+
+    return orders;
+  }
+
 }

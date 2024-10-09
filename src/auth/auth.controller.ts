@@ -66,7 +66,7 @@ export class AuthController {
   }
 
   @Get('api/google/login')
-  @UseGuards(LoginGoogleAuthGuard)
+  @UseGuards(AuthGuard('google-login'))
   async googleLoginAuth(@Req() req: Request) {}
 
   @Get('api/callback/google/login')
@@ -88,7 +88,7 @@ export class AuthController {
   }
 
   @Get('api/google/register/customer')
-  @UseGuards(CustomerGoogleAuthGuard)
+  @UseGuards(AuthGuard('google-register'))
   async googleCustomerAuth(@Req() req: Request) {}
 
   @Get('api/callback/google/register/customer')
@@ -98,6 +98,7 @@ export class AuthController {
     let userFound = null;
 
     if (user && typeof user === 'object') {
+
       userFound = await this.usersService.getUserByEmail(user.email);
 
       if (userFound) {
