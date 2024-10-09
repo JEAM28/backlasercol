@@ -17,6 +17,7 @@ import { EmailModule } from './email/email.module';
 import { EmailService } from './email/email.service';
 import { DiscountModule } from './code/code.module';
 import { PassportModule } from '@nestjs/passport';
+import { PaymentsModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { PassportModule } from '@nestjs/passport';
     CartModule,
     DiscountModule,
     PassportModule.register({ session: true }),
+    PaymentsModule,
   ],
   controllers: [HomeController],
   providers: [AppService, EmailService],
