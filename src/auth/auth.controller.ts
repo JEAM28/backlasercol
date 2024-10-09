@@ -15,7 +15,9 @@ import { Request, Response } from 'express';
 import { LoginGoogleAuthGuard } from 'src/guards/login.google.guard';
 import { CustomerGoogleAuthGuard } from 'src/guards/register.google.guard';
 import { EmailService } from 'src/email/email.service';
-
+import { AuthGuard } from '@nestjs/passport';
+import { UsersService } from 'src/users/users.service';
+import { CartService } from 'src/cart/cart.service'
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
@@ -23,6 +25,8 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
     private readonly emailService: EmailService,
+    private readonly usersService: UsersService,
+    private readonly cartService: CartService
   ) {}
 
   @Post('/register')
@@ -66,15 +70,21 @@ export class AuthController {
   async googleLoginAuth(@Req() req: Request) {}
 
   @Get('api/callback/google/login')
-  @UseGuards(LoginGoogleAuthGuard)
+  @UseGuards(AuthGuard('google-login'))
   async googleLoginAuthRedirect(@Req() req: Request, @Res() res: Response) {
     const user: any = req.user;
+    
+    
     if (user && typeof user === 'object') {
       const payload = { id: user.id, name: user.name, email: user.email };
       const token = this.jwtService.sign(payload);
+      // const sessionInfo = payload
+      // sessionInfo["token"] = token;
+      
+      // res.cookie('userInfo', JSON.stringify(sessionInfo), { httpOnly: false, secure:true, sameSite:'none' });
       res.redirect(`https://lasercol.vercel.app/?token=${token}`);
     } else {
-      res.redirect(`https://lasercol.vercel.app/register?user=DoesNotExist`);
+      res.redirect(`https://lasercol.vercel.app/register?user=DoesNotExist`); 
     }
   }
 
@@ -83,10 +93,12 @@ export class AuthController {
   async googleCustomerAuth(@Req() req: Request) {}
 
   @Get('api/callback/google/register/customer')
-  @UseGuards(CustomerGoogleAuthGuard)
+  @UseGuards(AuthGuard('google-register'))
   async googleCustomerAuthRedirect(@Req() req: Request, @Res() res: Response) {
-    const user: any = req.user;
+    const user: any = req.user;    
     if (user && typeof user === 'object') {
+      const userFound = await this.usersService.getUserByEmail(user.email);
+      this.cartService.createCart(userFound.id);
       res.redirect('https://lasercol.vercel.app/login');
     } else {
       res.redirect(`https://lasercol.vercel.app/register?error=userExists`);

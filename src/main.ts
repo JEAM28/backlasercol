@@ -8,7 +8,7 @@ import { config as dotenvConfig } from 'dotenv';
 import * as passport from 'passport';
 
 dotenvConfig({ path: '.env' });
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
