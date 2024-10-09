@@ -8,12 +8,16 @@ export class PaypalController {
   @Post('create')
   async createOrder(@Body('amount') amount: string) {
     const orderId = await this.paypalService.createOrder(amount);
-    return { orderId }; // Retorna el ID de la orden
+
+    return { orderId };
+
   }
 
   @Post('capture/:orderId')
   async captureOrder(@Param('orderId') orderId: string) {
     const captureResult = await this.paypalService.captureOrder(orderId);
-    return captureResult; // Retorna el resultado de la captura
+
+    return captureResult;
+
   }
 }
