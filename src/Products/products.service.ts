@@ -11,7 +11,6 @@ export class ProductsService implements OnModuleInit {
   constructor(
     @InjectRepository(Products)
     private productsRepository: Repository<Products>,
-    private categoriesService: CategoriesService,
     @InjectRepository(Categories)
     private categoriesRepository: Repository<Categories>,
   ) {}
@@ -64,6 +63,7 @@ export class ProductsService implements OnModuleInit {
     });
     return 'productos agregados';
   }
+
   async getProductById(id: string) {
     const product = await this.productsRepository.findOneBy({ id });
     if (!product) {

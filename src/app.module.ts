@@ -17,7 +17,12 @@ import { EmailModule } from './email/email.module';
 import { EmailService } from './email/email.service';
 import { DiscountModule } from './code/code.module';
 import { PassportModule } from '@nestjs/passport';
+<<<<<<< HEAD
 import { MercadoPagoModule } from './mercadoPago/mercadoPago.module';
+=======
+import { PaymentsModule } from './payment/payment.module';
+
+>>>>>>> 4e99f0bb56c01cfc02d47c05744e69fa35c7aeb8
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -46,6 +51,7 @@ import { MercadoPagoModule } from './mercadoPago/mercadoPago.module';
     DiscountModule,
     MercadoPagoModule,
     PassportModule.register({ session: true }),
+    PaymentsModule,
   ],
   controllers: [HomeController],
   providers: [AppService, EmailService],
