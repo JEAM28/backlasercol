@@ -26,11 +26,19 @@ export class RegisterGoogleStrategy extends PassportStrategy(
     profile: Profile,
     done: VerifyCallback,
   ) {
-    const user = await this.authService.googleRegisterCustomer({
-      email: profile.emails[0].value,
-      name: profile.name.givenName,
-      lastName: profile.name.familyName,
-    });
-    done(null, user);
+    try {
+      const user = await this.authService.googleRegisterCustomer({
+        email: profile.emails[0].value,
+        name: profile.name.givenName,
+        lastName: profile.name.familyName,
+      });
+      
+      console.log(user);
+      
+      done(null, user);
+      
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
