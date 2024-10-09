@@ -26,14 +26,12 @@ export class PaypalService {
         },
       ],
       application_context: {
-        return_url: 'https://www.sandbox.paypal.com.', // Redirige aquí tras aprobación
-        // Redirige aquí si se cancela
+        return_url: 'https://www.sandbox.paypal.com.',
       },
     });
 
     const order = await this.client.execute(request);
 
-    // Devuelve el enlace de aprobación al frontend
     const approvalUrl = order.result.links.find(
       (link) => link.rel === 'approve',
     ).href;
@@ -44,6 +42,6 @@ export class PaypalService {
     request.requestBody({});
 
     const response = await this.client.execute(request);
-    return response.result; // Devuelve el resultado de la captura
+    return response.result;
   }
 }
