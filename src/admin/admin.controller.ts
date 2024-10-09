@@ -11,11 +11,25 @@ export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Post('create')
+  @ApiOperation({
+    summary: "Crear un nuevo administrador",
+    description: `
+      Esta ruta permite crear un nuevo administrador proporcionando los datos necesarios a través de un DTO ('createAdminDto'). 
+      El password será automáticamente cifrado antes de guardar el nuevo administrador en la base de datos.
+    `,
+  })
   async createAdmin(@Body() createAdminDto: CreateAdminDto) {
     return this.adminService.createAdmin(createAdminDto);
   }
 
   @Post('login')
+  @ApiOperation({
+    summary: "Iniciar sesión como administrador",
+    description: `
+      Esta ruta permite a los administradores iniciar sesión proporcionando su 'email' y 'password'. 
+      Si las credenciales son correctas, se devuelve un token JWT que puede ser utilizado para autenticación en futuras solicitudes.
+    `,
+  })
   login(@Body() credentials: LoginAdminDTO) {
     const { email, password } = credentials;
     return this.adminService.login(email, password);

@@ -56,14 +56,36 @@ export class OrdersController {
     summary: "Obtener una orden por ID",
     description: `
       Esta ruta permite a los usuarios autenticados obtener los detalles de una orden específica utilizando su 'id'.
-    `
+      El ID de la orden debe ser enviado como parámetro en la URL. La respuesta incluirá información detallada de la orden, 
+      como los productos comprados, la fecha de creación y el estado actual de la orden.
+    `,
   })
   getOrder(@Query('id') id: string) {
     return this.ordersService.getOrder(id);
   }
 
   @Put(':id')
+  @ApiOperation({
+    summary: "Marcar una orden como recibida",
+    description: `
+      Esta ruta permite a los usuarios cambiar el estado de una orden a "Recibido". Se debe proporcionar el 'id' de la orden 
+      como parámetro en la URL. La orden debe estar en estado "Enviado" para que esta acción sea exitosa.
+    `,
+  })
   async markAsReceived(@Param('id') orderId: string): Promise<string> {
     return await this.ordersService.changeOrderStatus(orderId);
+  }
+
+  @Get("userorder/:id")
+  @ApiOperation({
+    summary: "Obtener todas las órdenes de un usuario",
+    description: `
+      Esta ruta permite a los usuarios autenticados obtener todas las órdenes asociadas a su cuenta utilizando su 'id'.
+      El ID del usuario se proporciona como parámetro en la URL y la respuesta incluirá una lista de todas sus órdenes, 
+      junto con detalles como el estado, los productos y la fecha de cada orden.
+    `,
+  })
+  getUserOders(@Param('id') userId: string) {
+    return this.ordersService.getOrdersByUserId(userId);
   }
 }
