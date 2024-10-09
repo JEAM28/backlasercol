@@ -13,7 +13,7 @@ import { UsersModule } from 'src/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { RegisterGoogleStrategy } from 'src/strategies/register.google.strategy';
 import { EmailModule } from 'src/email/email.module';
-
+import { CartModule } from 'src/cart/cart.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Users]),
@@ -24,6 +24,7 @@ import { EmailModule } from 'src/email/email.module';
     }),
     UsersModule,
     EmailModule,
+    CartModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     ConfigModule.forRoot({
       isGlobal: true,

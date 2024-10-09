@@ -23,10 +23,10 @@ export class Cart {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   total: number;
 
-  @Column()
+  @Column({ nullable: true })
   discountCode?: string;
 
   @ApiProperty({

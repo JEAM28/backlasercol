@@ -16,7 +16,8 @@ import { LoginGoogleAuthGuard } from 'src/guards/login.google.guard';
 import { CustomerGoogleAuthGuard } from 'src/guards/register.google.guard';
 import { EmailService } from 'src/email/email.service';
 import { AuthGuard } from '@nestjs/passport';
-
+import { UsersService } from 'src/users/users.service';
+import { CartService } from 'src/cart/cart.service'
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
@@ -24,6 +25,8 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
     private readonly emailService: EmailService,
+    private readonly usersService: UsersService,
+    private readonly cartService: CartService
   ) {}
 
   @Post('/register')
@@ -70,7 +73,7 @@ export class AuthController {
   @UseGuards(AuthGuard('google-login'))
   async googleLoginAuthRedirect(@Req() req: Request, @Res() res: Response) {
     const user: any = req.user;
-    console.log(user.id);
+    
     
     if (user && typeof user === 'object') {
       const payload = { id: user.id, name: user.name, email: user.email };
@@ -94,6 +97,8 @@ export class AuthController {
   async googleCustomerAuthRedirect(@Req() req: Request, @Res() res: Response) {
     const user: any = req.user;    
     if (user && typeof user === 'object') {
+      const userFound = await this.usersService.getUserByEmail(user.email);
+      this.cartService.createCart(userFound.id);
       res.redirect('https://lasercol.vercel.app/login');
     } else {
       res.redirect(`https://lasercol.vercel.app/register?error=userExists`);

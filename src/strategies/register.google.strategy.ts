@@ -33,7 +33,6 @@ export class RegisterGoogleStrategy extends PassportStrategy(
         lastName: profile.name.familyName,
       });
       
-      console.log(user);
       
       done(null, user);
       
