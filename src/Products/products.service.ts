@@ -123,4 +123,14 @@ export class ProductsService implements OnModuleInit {
     }
     return products;
   }
+
+  async addCustomMessage(id: string, customMessage: string) {
+    const product = await this.productsRepository.findOneBy({ id });
+    if (!product) {
+      throw new NotFoundException('Producto no encontrado');
+    }
+
+    product.customMessage = customMessage;
+    return await this.productsRepository.save(product);
+  }
 }

@@ -39,7 +39,8 @@ export class CreateProductDTO {
   material: string;
 
   @ApiProperty({
-    description: 'Medidas del producto, incluyendo unidades (cm, pulgadas, etc.).',
+    description:
+      'Medidas del producto, incluyendo unidades (cm, pulgadas, etc.).',
     example: '10cm x 8cm x 8cm',
   })
   @IsNotEmpty()
@@ -57,7 +58,7 @@ export class CreateProductDTO {
 
   @ApiProperty({
     description: 'Precio del producto con dos decimales de precisión.',
-    example: 48000.00,
+    example: 48000.0,
   })
   @IsNotEmpty()
   @IsNumber({ maxDecimalPlaces: 2 })
@@ -65,7 +66,8 @@ export class CreateProductDTO {
   valor: number;
 
   @ApiProperty({
-    description: 'URL de la imagen del producto. Si no se proporciona, se asigna una imagen por defecto.',
+    description:
+      'URL de la imagen del producto. Si no se proporciona, se asigna una imagen por defecto.',
     example: 'https://example.com/images/taza.jpg',
   })
   @IsOptional()
@@ -80,4 +82,8 @@ export class CreateProductDTO {
   @IsNotEmpty()
   @IsUUID() // Especifica que debe ser un UUID válido
   category: string;
+
+  @IsString()
+  @IsOptional()
+  customMessage: string;
 }
