@@ -116,4 +116,16 @@ export class OrdersService {
     return 'El estado de la orden ha sido actualizado a Recibido.';
   }
 
+  async getOrdersByUserId(userId: string): Promise<Orders[]> {
+    const orders = await this.ordersRepository.find({
+      where: { user: { id: userId } },
+    });
+
+    if (orders.length === 0) {
+      throw new NotFoundException('No se encontraron órdenes para el usuario.');
+    }
+
+    return orders;
+  }
+
 }
