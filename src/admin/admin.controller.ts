@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateAdminDto, LoginAdminDTO } from './createAdminDto';
 import { AdminService } from './admin.service';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -35,7 +44,27 @@ export class AdminController {
     return this.adminService.login(email, password);
   }
 
+  @Get()
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiOperation({
+    summary: 'Obtener lista de administradores',
+    description: `
+      Esta ruta permite a los administradores obtener una lista de administradores paginada. 
+      Se pueden especificar los parámetros de consulta 'page' (página) y 'limit' (límite) para controlar 
+      la paginación. Si no se proporcionan, se devolverá la primera página con un límite de 10 usuarios.
+    `,
+  })
+  getUsers(@Query('page') page: number, @Query('limit') limit: number) {
+    if (page && limit) {
+      return this.adminService.getAllAdmins(page, limit);
+    }
+    return this.adminService.getAllAdmins(1, 10);
+  }
+
   @Delete(':id')
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   async deleteAdmin(@Param('id') adminId: string): Promise<string> {
     return this.adminService.deleteAdmin(adminId);
   }
