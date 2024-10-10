@@ -12,8 +12,8 @@ export class CategoriesService {
     private categoriesRepository: Repository<Categories>,
   ) {}
 
-  onModuleInit() {
-    data?.map(async (element) => {
+ async onModuleInit() {
+    let promises = data?.map(async (element) => {
       await this.categoriesRepository
         .createQueryBuilder()
         .insert()
@@ -22,6 +22,8 @@ export class CategoriesService {
         .onConflict(`("name") DO NOTHING`)
         .execute();
     });
+    
+    await Promise.all(promises)
   }
 
   async getCategories() {

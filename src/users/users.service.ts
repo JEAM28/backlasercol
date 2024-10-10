@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './users.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDTO } from 'src/users/users.dto';
+import { CreateUserDTO, UpdateUserDTO } from 'src/users/users.dto';
 
 @Injectable()
 export class UsersService {
@@ -37,9 +37,9 @@ export class UsersService {
     return userWithoutPassword;
   }
 
-  async updateUser(id: string, user: CreateUserDTO) {
-    const { passwordConfirmation, ...userNoConfirmPassword } = user;
-    await this.userRepository.update(id, userNoConfirmPassword);
+  async updateUser(id: string, user: UpdateUserDTO) {
+    // const { passwordConfirmation, ...userNoConfirmPassword } = user;
+    await this.userRepository.update(id, user);
     const updatedUser = await this.userRepository.findOneBy({ id });
     const { password, ...userNoPassword } = updatedUser;
     return userNoPassword;

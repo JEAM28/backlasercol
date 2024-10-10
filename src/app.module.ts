@@ -17,6 +17,7 @@ import { EmailModule } from './email/email.module';
 import { EmailService } from './email/email.service';
 import { DiscountModule } from './code/code.module';
 import { PassportModule } from '@nestjs/passport';
+import { MercadoPagoModule } from './mercadoPago/mercadoPago.module';
 import { PaymentsModule } from './payment/payment.module';
 
 @Module({
@@ -45,6 +46,7 @@ import { PaymentsModule } from './payment/payment.module';
     EmailModule,
     CartModule,
     DiscountModule,
+    MercadoPagoModule,
     PassportModule.register({ session: true }),
     PaymentsModule,
   ],
