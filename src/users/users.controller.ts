@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDTO } from 'src/users/users.dto';
+import { CreateUserDTO, UpdateUserDTO } from 'src/users/users.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/roles.enum';
@@ -101,7 +101,7 @@ export class UsersController {
       Es necesario proporcionar un cuerpo con los datos que se desean actualizar.
     `,
   })
-  updateUser(@Param('id') id: string, @Body() user: CreateUserDTO) {
+  updateUser(@Param('id') id: string, @Body() user: UpdateUserDTO) {
     return this.usersService.updateUser(id, user);
   }
 }

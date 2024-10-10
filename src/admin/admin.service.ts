@@ -69,4 +69,14 @@ export class AdminService {
       id,
     };
   }
+
+
+  async getAllAdmins(page: number, limit: number) {
+    let user = await this.adminRepository.find();
+    const start = (page - 1) * limit;
+    const end = start + +limit;
+    user = user.slice(start, end);
+    return user;
+  }
+
 }
