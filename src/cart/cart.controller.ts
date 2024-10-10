@@ -99,7 +99,10 @@ export class CartController {
   }
 
   @Post(':cartId/order')
-  async createOrderFromCart(@Param('cartId') cartId: string): Promise<Orders> {
-    return this.cartService.createOrderFromCart(cartId);
+  async createOrderFromCart(
+    @Param('cartId') cartId: string,
+    @Param('userId') userId: string,
+  ): Promise<Orders> {
+    return this.cartService.createOrderFromCart(cartId, userId);
   }
 }

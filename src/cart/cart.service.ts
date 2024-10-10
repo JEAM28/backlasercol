@@ -123,7 +123,7 @@ export class CartService {
     return this.cartRepository.save(cart);
   }
 
-  async createOrderFromCart(cartId: string): Promise<Orders> {
+  async createOrderFromCart(cartId: string, userId: string): Promise<Orders> {
     const cart = await this.cartRepository.findOne({
       where: { id: cartId },
       relations: { products: true, users: true },
@@ -133,6 +133,10 @@ export class CartService {
     }
     if (cart.products.length === 0) {
       throw new Error('el carrito esta vacio');
+    }
+
+    if (cart.users.id !== userId) {
+      throw new BadRequestException('El carrito no pertenece a este usuario');
     }
 
     const order = new Orders();
