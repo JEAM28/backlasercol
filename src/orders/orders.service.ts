@@ -5,6 +5,7 @@ import { Users } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
 import { Orders } from './orders.entity';
 import { OrderDetails } from './orderdetails.entity';
+import { CartService } from 'src/cart/cart.service'; // Make sure to import the CartService
 
 @Injectable()
 export class OrdersService {
@@ -17,7 +18,114 @@ export class OrdersService {
     private usersRepository: Repository<Users>,
     @InjectRepository(Products)
     private productsRepository: Repository<Products>,
+    private cartService: CartService, // Inject CartService here
   ) {}
+
+  async createOrderFromCart(userId: string) {
+    // Obtener el usuario
+    const user = await this.usersRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    // Obtener el carrito del usuario
+    const cart = await this.cartService.getCartById(userId); // Use cartService here
+    if (!cart || !cart.products || cart.products.length === 0) {
+      throw new NotFoundException('El carrito está vacío o no existe');
+    }
+
+    // Crear la orden
+    const order = new Orders();
+    order.date = new Date();
+    order.user = user;
+    order.cart = cart; // Asociar el carrito a la orden
+
+    // Guardar la orden
+    const newOrder = await this.ordersRepository.save(order);
+
+    // Calcular el total y crear los detalles de la orden
+    let total = 0;
+    const productsArray = await Promise.all(
+      cart.products.map(async (product) => {
+        const productDetails = await this.productsRepository.findOneBy({ id: product.id });
+        if (!productDetails || productDetails.stock <= 0) {
+          throw new BadRequestException(`Producto ${product.id} no disponible`);
+        }
+        total += Number(productDetails.valor);
+
+        // Actualizar stock
+        await this.productsRepository.update(
+          { id: product.id },
+          { stock: productDetails.stock - 1 }
+        );
+
+        return productDetails;
+      })
+    );
+
+    const orderDetail = new OrderDetails();
+    orderDetail.price = total;
+    orderDetail.products = productsArray;
+    orderDetail.order = newOrder;
+
+    // Guardar los detalles de la orden
+    await this.orderDetailsRepository.save(orderDetail);
+
+    // Retornar la orden con detalles
+    return await this.ordersRepository.findOne({
+      where: { id: newOrder.id },
+      relations: ['orderDetails', 'orderDetails.products'],
+    });
+  }
+
+  getOrder(id: string) {
+    const order = this.ordersRepository.findOne({
+      where: { id },
+      relations: {
+        orderDetails: {
+          products: true,
+        },
+      },
+    });
+
+    if (!order) {
+      throw new NotFoundException();
+    }
+    return order;
+  }
+
+  async changeOrderStatus(orderId: string): Promise<string> {
+    const order = await this.ordersRepository.findOneBy({ id: orderId });
+
+    if (!order) {
+      throw new NotFoundException('La orden no fue encontrada.');
+    }
+
+    if (order.status === 'Recibido') {
+      throw new BadRequestException('La orden ya ha sido recibida.');
+    }
+
+    order.status = 'Recibido';
+    await this.ordersRepository.save(order);
+
+    return 'El estado de la orden ha sido actualizado a Recibido.';
+  }
+
+  async getOrdersByUserId(userId: string): Promise<Orders[]> {
+    const orders = await this.ordersRepository.find({
+      where: { user: { id: userId } },
+    });
+
+    if (orders.length === 0) {
+      throw new NotFoundException('No se encontraron órdenes para el usuario.');
+    }
+
+    return orders;
+  }
+}
+
+
+
 
 //async addOrder(userId: string, products: any) {
 //  let total = 0;
@@ -81,51 +189,3 @@ export class OrdersService {
 //  });
 //}
 
-  
-
-  getOrder(id: string) {
-    const order = this.ordersRepository.findOne({
-      where: { id },
-      relations: {
-        orderDetails: {
-          products: true,
-        },
-      },
-    });
-
-    if (!order) {
-      throw new NotFoundException();
-    }
-    return order;
-  }
-
-  async changeOrderStatus(orderId: string): Promise<string> {
-    const order = await this.ordersRepository.findOneBy({ id: orderId });
-
-    if (!order) {
-      throw new NotFoundException('La orden no fue encontrada.');
-    }
-
-    if (order.status === 'Recibido') {
-      throw new BadRequestException('La orden ya ha sido recibida.');
-    }
-
-    order.status = 'Recibido';
-    await this.ordersRepository.save(order);
-
-    return 'El estado de la orden ha sido actualizado a Recibido.';
-  }
-
-  async getOrdersByUserId(userId: string): Promise<Orders[]> {
-    const orders = await this.ordersRepository.find({
-      where: { user: { id: userId } },
-    });
-
-    if (orders.length === 0) {
-      throw new NotFoundException('No se encontraron órdenes para el usuario.');
-    }
-
-    return orders;
-  }
-
-}
