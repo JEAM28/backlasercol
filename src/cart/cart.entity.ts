@@ -26,6 +26,9 @@ export class Cart {
   @Column()
   total: number;
 
+  @Column({ nullable: false })
+  quantity?: number;
+
   @Column()
   discountCode?: string;
 
