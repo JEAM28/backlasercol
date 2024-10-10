@@ -19,6 +19,7 @@ app.enableCors({
     'https://lasercol.vercel.app', 
     'https://hk7406wz-3000.brs.devtunnels.ms', 
     'https://lasercoladmindashboard.vercel.app',
+    'http://localhost:4000', // Add your localhost origin here
     'http://localhost:5000' // Add your localhost origin here
   ],
   credentials: true, // Allow credentials (cookies, headers, etc.)
