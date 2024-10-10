@@ -37,7 +37,7 @@ export class ProductsController {
     return this.productsService.getProducts(1, 15);
   }
 
-  @Get(':name/:nombre')
+  @Get('name/:nombre')
   @ApiOperation({
     summary: 'Obtener un producto por nombre',
     description: `
@@ -49,7 +49,7 @@ export class ProductsController {
     return this.productsService.getProductByName(nombre);
   }
 
-  @Get(':category/:category')
+  @Get('category/:category')
   @ApiOperation({
     summary: 'Obtener productos por categoría',
     description: `
