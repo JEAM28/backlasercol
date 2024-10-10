@@ -28,6 +28,13 @@ export class Orders {
   @Column()
   date: Date;
 
+  @Column({
+    type: 'enum',
+    enum: ['Enviado', 'Recibido'],
+    default: 'Enviado',
+  })
+  status: 'Enviado' | 'Recibido';
+
   @ApiProperty({
     description: 'Detalles de la orden.',
   })

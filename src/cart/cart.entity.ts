@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { DiscountCode } from 'src/code/code.entity';
 import { Orders } from 'src/orders/orders.entity';
 import { Products } from 'src/Products/products.entity';
 import { Users } from 'src/users/users.entity';
@@ -22,12 +23,21 @@ export class Cart {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ nullable: true })
+  total: number;
+
+  @Column({ nullable: true })
+  discountCode?: string;
+
   @ApiProperty({
     description: 'Indica si el carrito ha sido comprado.',
     example: false,
   })
   @Column({ default: false })
   isPurchased: boolean;
+
+  @Column({ nullable: true })
+  usersId: string;
 
   @ApiProperty({
     description: 'Lista de productos en el carrito.',
@@ -41,13 +51,13 @@ export class Cart {
   @OneToOne(() => Users, (users) => users.cart)
   @JoinColumn()
   users: Users;
-  @Column({ nullable: true }) // Add this line to define the foreign key explicitly
-  usersId: string;  // This will store the actual `userId`
-  
+
   @ApiProperty({
     description: 'Lista de órdenes asociadas al carrito.',
   })
   @OneToMany(() => Orders, (orders) => orders.cart)
   orders: Orders[];
-  
+
+  @OneToOne(() => DiscountCode, (discountCode) => discountCode.cart)
+  discountCodes: DiscountCode;
 }

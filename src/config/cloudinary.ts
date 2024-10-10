@@ -2,7 +2,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { config as dotenvConfig } from 'dotenv';
 import { Provider } from '@nestjs/common';
 
-dotenvConfig({ path: '.development.env' });
+dotenvConfig({ path: '.env' });
 
 export const CloudinaryConfig = {
   provide: 'CLOUDINARY',

@@ -28,11 +28,12 @@ export class CreateUserDTO {
   name: string;
 
   @ApiProperty({
-    description: 'DNI del usuario. Debe ser un número de al menos 6 dígitos.',
+    description: 'DNI del usuario. Debe ser un número de al menos 6 dígitos y maximo 16.',
     example: '12345678'
   })
   @IsNotEmpty()
   @MinLength(6)
+  @MaxLength(16)
   @Matches(/^[0-9]+$/, { message: 'El DNI solo puede contener números' })
   Dni: string;
 
@@ -122,3 +123,12 @@ export class LoginUserDTO extends PickType(CreateUserDTO, [
   'email',
   'password',
 ]) {}
+export class UpdateUserDTO extends PickType(CreateUserDTO, [
+  'name',
+  'birthDate',
+  'country',
+  'city',
+  'address',
+]) {}
+
+
