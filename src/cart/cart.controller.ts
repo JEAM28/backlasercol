@@ -39,6 +39,11 @@ export class CartController {
     return this.cartService.createCart(body.userId);
   }
 
+  @Get(':userId/orders')
+  async getOrdersByUserId(@Param('userId') userId: string): Promise<Orders[]> {
+    return this.cartService.getOrdersByUserId(userId);
+  }
+
   @Get(':id')
   @ApiOperation({
     summary: 'Obtener un carrito por ID',
@@ -60,8 +65,9 @@ export class CartController {
   async addProductToCart(
     @Param('cartId') cartId: string,
     @Param('productId') productId: string,
+    @Body('quantity') quantity: number,
   ): Promise<CartResponse> {
-    return this.cartService.addProductCart(cartId, productId);
+    return this.cartService.addProductCart(cartId, productId, quantity);
   }
 
   @Patch(':cartId/:userId')
