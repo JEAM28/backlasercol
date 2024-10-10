@@ -27,9 +27,11 @@ export class EmailService {
       __dirname,
       '../nodemailer-correo/index.html',
     );
+    console.log(emailTemplatePath);
 
     let htmlTemplate = fs.readFileSync(emailTemplatePath, 'utf-8');
     htmlTemplate = htmlTemplate.replace('[Nombre del Usuario]', user.name);
+    console.log(htmlTemplate);
 
     await this.sendMail(
       user.email,

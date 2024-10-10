@@ -7,6 +7,7 @@ const destDir: string = 'dist/nodemailer-correo';
 function copyAssets(): void {
   try {
     fs.copySync(srcDir, destDir, { overwrite: true });
+    console.log('Static assets copied successfully for development!');
   } catch (err) {
     console.error('Error copying static assets:', err);
   }

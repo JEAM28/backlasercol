@@ -19,7 +19,7 @@ export class RegisterGoogleStrategy extends PassportStrategy(
       scope: ['profile', 'email'],
     });
   }
-
+  
   async validate(
     accessToken: string,
     refreshToken: string,
@@ -32,8 +32,12 @@ export class RegisterGoogleStrategy extends PassportStrategy(
         name: profile.name.givenName,
         lastName: profile.name.familyName,
       });
-
+      
+      
       done(null, user);
-    } catch (error) {}
+      
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

@@ -6,25 +6,24 @@ import { swaggerDescription } from './swaggerDescription';
 import * as session from 'express-session';
 import { config as dotenvConfig } from 'dotenv';
 import * as passport from 'passport';
-import { loggerFunc } from './middlewares/loggerFuncion.middleware';
 
 dotenvConfig({ path: '.env' });
 const PORT = process.env.PORT || 3000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  console.log("bruno")
+  // main.ts
+app.enableCors({
+  origin: [
+    'https://lasercol.vercel.app', 
+    'https://hk7406wz-3000.brs.devtunnels.ms', 
+    'https://lasercoladmindashboard.vercel.app',
+    'http://localhost:5000' // Add your localhost origin here
+  ],
+  credentials: true, // Allow credentials (cookies, headers, etc.)
+});
 
-  app.enableCors({
-    origin: [
-      'https://lasercol.vercel.app',
-      'https://hk7406wz-3000.brs.devtunnels.ms',
-      'https://lasercoladmindashboard.vercel.app',
-      'http://localhost:5000',
-    ],
-    credentials: true,
-  });
-
-  app.use(loggerFunc);
   app.useGlobalPipes(new ValidationPipe());
   const options = new DocumentBuilder()
     .setTitle('NESTJS API - Ecommerce Lasercol')
