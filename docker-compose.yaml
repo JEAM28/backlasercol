@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  nestapp:
+    build: ./
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_HOST=postgresdb
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=postgres
+      - POSTGRES_PASSWORD=fedetrovato_03
+      - DATABASE_NAME=lasercol
+    depends_on:
+      - postgresdb
+
+  postgresdb:
+    image: "postgres"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: fedetrovato_03
+      POSTGRES_DB: lasercol
+
+volumes:
+  pgdata:

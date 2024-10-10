@@ -6,8 +6,8 @@ import { Users } from 'src/users/users.entity';
 import { config as dotenvConfig } from 'dotenv';
 
 dotenvConfig({ path: '.env' });
-Injectable();
-export class loginGoogleStrategy extends PassportStrategy(
+@Injectable()
+export class LoginGoogleStrategy extends PassportStrategy(
   Strategy,
   'google-login',
 ) {
@@ -15,9 +15,8 @@ export class loginGoogleStrategy extends PassportStrategy(
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/api/callback/google/login',
-      Scope: ['profile', 'email'],
-      state: true,
+      callbackURL: 'https://back-deploy-5y3a.onrender.com/auth/api/callback/google/login',
+      scope: ['profile', 'email'],
     });
   }
 
@@ -27,9 +26,9 @@ export class loginGoogleStrategy extends PassportStrategy(
     profile: Profile,
     done: VerifyCallback,
   ) {
-    const user: Users | string = await this.authService.googleLogin({
+    const user = await this.authService.googleLogin({
       email: profile.emails[0].value,
     });
-    return user || null;
+    done(null, user);
   }
 }

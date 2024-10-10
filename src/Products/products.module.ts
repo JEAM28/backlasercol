@@ -4,7 +4,6 @@ import { ProductsService } from './products.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Products } from './products.entity';
 import { Categories } from 'src/categories/categories.entity';
-import { Cart } from 'src/cart/cart.entity';
 import { CategoriesModule } from 'src/categories/categories.module';
 
 @Module({

@@ -8,6 +8,7 @@ import { Users } from 'src/users/users.entity';
 import { Products } from 'src/Products/products.entity';
 import { Cart } from './cart.entity';
 import { Categories } from 'src/categories/categories.entity';
+import { DiscountCode } from 'src/code/code.entity';
 
 @Module({
   imports: [
@@ -18,9 +19,11 @@ import { Categories } from 'src/categories/categories.entity';
       Products,
       Cart,
       Categories,
+      DiscountCode,
     ]),
   ],
   controllers: [CartController],
   providers: [CartService],
+  exports: [CartService],
 })
 export class CartModule {}

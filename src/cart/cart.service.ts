@@ -32,24 +32,24 @@ export class CartService {
 
   async createCart(userId?: string): Promise<Cart> {
     if (!userId) {
-        throw new BadRequestException('userId is required');
+      throw new BadRequestException('userId is required');
     }
 
     const newCart = this.cartRepository.create();
     const user = await this.userRepository.findOne({ where: { id: userId } });
 
     if (!user) {
-        throw new NotFoundException('Usuario no encontrado');
+      throw new NotFoundException('Usuario no encontrado');
     }
 
     newCart.users = user;
     return await this.cartRepository.save(newCart);
-}
-
+  }
 
   async addProductCart(
     cartId: string,
     productId: string,
+    quantity: number,
   ): Promise<CartResponse> {
     const cart = await this.cartRepository.findOne({
       where: { id: cartId },
@@ -63,14 +63,18 @@ export class CartService {
     if (!cart) {
       throw new BadRequestException('carrito no encontrado');
     }
-    const products = await this.productsRepository.findOne({
-      where: { id: productId },
-    });
-    if (!products) {
-      throw new NotFoundException('Producto no encontrado');
+
+    const productInCart = cart.products.find(
+      (article) => article.id === productId,
+    );
+
+    if (productInCart) {
+      productInCart['quantity'] += quantity;
+    } else {
+      product['quantity'] = quantity;
+      cart.products.push(product);
     }
 
-    cart.products.push(product);
     await this.cartRepository.save(cart);
 
     const total = await this.calculateCartTotal(cartId);
@@ -105,7 +109,6 @@ export class CartService {
     });
     return cartFound;
   }
-  
 
   async mergeCart(cartId: string, userId: string): Promise<Cart> {
     const cart = await this.getCartById(cartId);
@@ -188,5 +191,24 @@ export class CartService {
 
     cart.products.splice(productIndex, 1);
     return this.cartRepository.save(cart);
+  }
+
+  async getOrdersByUserId(userId: string): Promise<Orders[]> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: { orders: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    if (user.orders.length === 0) {
+      throw new NotFoundException(
+        'No se encontraron órdenes para este usuario',
+      );
+    }
+
+    return user.orders;
   }
 }

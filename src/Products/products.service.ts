@@ -11,7 +11,6 @@ export class ProductsService implements OnModuleInit {
   constructor(
     @InjectRepository(Products)
     private productsRepository: Repository<Products>,
-    private categoriesService: CategoriesService,
     @InjectRepository(Categories)
     private categoriesRepository: Repository<Categories>,
   ) {}
@@ -64,6 +63,7 @@ export class ProductsService implements OnModuleInit {
     });
     return 'productos agregados';
   }
+
   async getProductById(id: string) {
     const product = await this.productsRepository.findOneBy({ id });
     if (!product) {
@@ -80,12 +80,12 @@ export class ProductsService implements OnModuleInit {
     return product;
   }
 
-  async addProduct(product: Partial<Products>) {
+  async addProduct(product) {
     const newProduct = this.productsRepository.create(product);
     return await this.productsRepository.save(newProduct);
   }
 
-  async editProduct(id: string, product: Partial<Products>) {
+  async editProduct(id: string, product) {
     const existingProduct = await this.productsRepository.findOneBy({ id });
     if (!existingProduct) {
       throw new NotFoundException('Producto no encontrado');
