@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Cart } from 'src/cart/cart.entity';
@@ -6,15 +15,12 @@ import { Orders } from './orders.entity';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateOrderDto } from './orders.dto';
 
-
-@ApiTags("Orders")
+@ApiTags('Orders')
 @ApiBearerAuth()
 @Controller('orders')
 @UseGuards(AuthGuard)
 export class OrdersController {
-  constructor(
-    private readonly ordersService: OrdersService
-  ) {}
+  constructor(private readonly ordersService: OrdersService) {}
 
   //@Post()
   //@ApiOperation({
@@ -53,7 +59,7 @@ export class OrdersController {
 
   @Get(':id')
   @ApiOperation({
-    summary: "Obtener una orden por ID",
+    summary: 'Obtener una orden por ID',
     description: `
       Esta ruta permite a los usuarios autenticados obtener los detalles de una orden específica utilizando su 'id'.
       El ID de la orden debe ser enviado como parámetro en la URL. La respuesta incluirá información detallada de la orden, 
@@ -66,7 +72,7 @@ export class OrdersController {
 
   @Put(':id')
   @ApiOperation({
-    summary: "Marcar una orden como recibida",
+    summary: 'Marcar una orden como recibida',
     description: `
       Esta ruta permite a los usuarios cambiar el estado de una orden a "Recibido". Se debe proporcionar el 'id' de la orden 
       como parámetro en la URL. La orden debe estar en estado "Enviado" para que esta acción sea exitosa.
@@ -76,9 +82,9 @@ export class OrdersController {
     return await this.ordersService.changeOrderStatus(orderId);
   }
 
-  @Get("userorder/:id")
+  @Get('userorder/:id')
   @ApiOperation({
-    summary: "Obtener todas las órdenes de un usuario",
+    summary: 'Obtener todas las órdenes de un usuario',
     description: `
       Esta ruta permite a los usuarios autenticados obtener todas las órdenes asociadas a su cuenta utilizando su 'id'.
       El ID del usuario se proporciona como parámetro en la URL y la respuesta incluirá una lista de todas sus órdenes, 
@@ -87,5 +93,15 @@ export class OrdersController {
   })
   getUserOders(@Param('id') userId: string) {
     return this.ordersService.getOrdersByUserId(userId);
+  }
+  @Get()
+  async getAllOrders(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
+    if (page && limit) {
+      return this.ordersService.getAllOrders(page, limit);
+    }
+    return this.ordersService.getAllOrders(1, 10);
   }
 }
