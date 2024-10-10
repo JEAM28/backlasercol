@@ -66,7 +66,7 @@ export class AuthController {
   }
 
   @Get('api/google/login')
-  @UseGuards(LoginGoogleAuthGuard)
+  @UseGuards(AuthGuard('google-login'))
   async googleLoginAuth(@Req() req: Request) {}
 
   @Get('api/callback/google/login')
@@ -88,7 +88,7 @@ export class AuthController {
   }
 
   @Get('api/google/register/customer')
-  @UseGuards(CustomerGoogleAuthGuard)
+  @UseGuards(AuthGuard('google-register'))
   async googleCustomerAuth(@Req() req: Request) {}
 
   @Get('api/callback/google/register/customer')
@@ -112,7 +112,7 @@ export class AuthController {
 
         res.redirect('https://lasercol.vercel.app/login');
       } else {
-        res.redirect(`https://lasercol.vercel.app/register?error=userExists`);
+        res.redirect('https://lasercol.vercel.app/register?error=userExists');
       }
     }
     return userFound;
