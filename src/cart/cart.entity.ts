@@ -26,6 +26,10 @@ export class Cart {
   @Column({ nullable: true })
   total: number;
 
+
+  @Column({ nullable: false })
+  quantity?: number;
+
   @Column({ nullable: true })
   discountCode?: string;
 
