@@ -69,4 +69,17 @@ export class AdminService {
       id,
     };
   }
+
+  async deleteAdmin(adminId: string): Promise<string> {
+    const admin = await this.adminRepository.findOne({
+      where: { id: adminId },
+    });
+
+    if (!admin) {
+      throw new BadRequestException('admin no encontrado');
+    }
+
+    await this.adminRepository.remove(admin);
+    return 'administrador eliminado exitosamente';
+  }
 }

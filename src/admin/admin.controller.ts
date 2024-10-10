@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
 import { CreateAdminDto, LoginAdminDTO } from './createAdminDto';
 import { AdminService } from './admin.service';
 
@@ -15,5 +15,10 @@ export class AdminController {
   login(@Body() credentials: LoginAdminDTO) {
     const { email, password } = credentials;
     return this.adminService.login(email, password);
+  }
+
+  @Delete(':id')
+  async deleteAdmin(@Param('id') adminId: string): Promise<string> {
+    return this.adminService.deleteAdmin(adminId);
   }
 }
