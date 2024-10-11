@@ -51,7 +51,8 @@ export class Products {
   material: string;
 
   @ApiProperty({
-    description: 'Medidas del producto, incluyendo unidades (cm, pulgadas, etc.).',
+    description:
+      'Medidas del producto, incluyendo unidades (cm, pulgadas, etc.).',
     example: '10cm x 8cm x 8cm',
   })
   @Column({
@@ -83,7 +84,8 @@ export class Products {
   valor: number;
 
   @ApiProperty({
-    description: 'URL de la imagen del producto. Si no se proporciona, se asigna una imagen por defecto.',
+    description:
+      'URL de la imagen del producto. Si no se proporciona, se asigna una imagen por defecto.',
     example: 'https://example.com/images/taza.jpg',
   })
   @Column({
@@ -106,8 +108,5 @@ export class Products {
     example: 'Hogar',
   })
   @ManyToOne(() => Categories, (category) => category.products)
-  @JoinColumn({
-    name: 'category',
-  })
   category: Categories;
 }

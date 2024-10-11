@@ -13,12 +13,19 @@ import { JwtModule } from '@nestjs/jwt';
 import { CartModule } from './cart/cart.module';
 import { OrdersModule } from './orders/orders.module';
 import { AdminModule } from 'src/admin/admin.module';
+import { EmailModule } from './email/email.module';
+import { EmailService } from './email/email.service';
+import { DiscountModule } from './code/code.module';
+import { PassportModule } from '@nestjs/passport';
+import { MercadoPagoModule } from './mercadoPago/mercadoPago.module';
+import { PaymentsModule } from './payment/payment.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeorm],
+      envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
@@ -31,14 +38,19 @@ import { AdminModule } from 'src/admin/admin.module';
     }),
     UsersModule,
     OrdersModule,
-    CartModule,
     ProductsModule,
     CategoriesModule,
     FileUploadModule,
     AuthModule,
     AdminModule,
+    EmailModule,
+    CartModule,
+    DiscountModule,
+    MercadoPagoModule,
+    PassportModule.register({ session: true }),
+    PaymentsModule,
   ],
   controllers: [HomeController],
-  providers: [AppService],
+  providers: [AppService, EmailService],
 })
 export class AppModule {}
